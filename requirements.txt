@@ -1,0 +1,12 @@
+# Documentation dependencies
+mkdocs>=1.5.0
+mkdocs-material>=9.0.0
+mkdocstrings>=0.22.0
+mkdocstrings-python>=1.0.0
+
+# Core project dependencies (from pyproject.toml)
+pandas>=2.1.0
+numpy>=1.25.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.15.0
