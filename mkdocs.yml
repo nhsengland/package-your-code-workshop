@@ -1,0 +1,107 @@
+site_name: Package Your Code Workshop
+site_description: NHS Data Science Workshop - Package Your Code
+site_author: Joseph Wilson - NHS England - Data Science and Applied AI Team
+site_url: https://nhsengland.github.io/package-your-code-workshop
+repo_url: https://github.com/nhsengland/package-your-code-workshop
+repo_name: package-your-code-workshop
+edit_uri: edit/main/docs/content/
+docs_dir: docs/content
+
+theme:
+  name: material
+  language: en
+  custom_dir: docs/overrides
+  palette:
+    scheme: default
+    primary: indigo
+  font:
+    text: Roboto
+  logo: images/logo/nhs-blue-on-white.jpg
+  favicon: images/favicon/favicon.ico
+  features:
+    - search.share
+    - content.code.annotate
+    - content.tabs.link
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.indexes
+    - navigation.path
+    - navigation.top
+    - toc.integrate
+  icon:
+    admonition:
+      <type>: material/alert
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: numpy
+            members_order: source
+            show_source: true
+            show_bases: true
+            extra:
+              show_inheritance: true
+
+nav:
+  - Home: index.md
+  - Getting Started: getting_started.md
+  - Workshops:
+    - workshops/index.md
+    - Dependency Management: workshops/dependency_management.md
+    - Packaging with pyproject.toml: workshops/packaging_pyproject.md
+    - Documentation with MkDocs: workshops/mkdocs_documentation.md
+    - Bonus Content:
+      - Cookiecutter Templates: workshops/cookiecutter_templates.md
+      - Pre-Commit Hooks: workshops/precommit_hooks.md
+      - CI/CD with GitHub Actions: workshops/github_actions.md
+  - API Reference: 
+    - api_reference/index.md
+
+extra_css:
+  - stylesheets/nhs_style.css
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/nhsengland/package-your-code-workshop
+    - icon: fontawesome/solid/envelope
+      link: mailto:datascience@nhs.net
+  generator: false
+
+copyright: Copyright &copy; 2025 Crown Copyright (NHS England)
+
+markdown_extensions:
+  - tables
+  - attr_list
+  - pymdownx.emoji
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.mark
+  - md_in_html
+  - footnotes
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.tilde
+
+extra_javascript:
+  - javascripts/mermaid.mjs
+
+watch:
+  - docs/overrides
