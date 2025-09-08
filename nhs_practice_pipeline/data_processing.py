@@ -3,29 +3,39 @@
 NHS Practice Level Data Processing Module
 =========================================
 
-This module handles data loading, cleaning, and joining operations for NHS
-practice level appointment data according to NHS data standards and best practices.
+This module handles data extraction, loading, and joining operations for NHS
+practice level appointment data according to NHS data standards and best
+practices.
 
-The module implements two main pipeline stages:
-1. DataLoadingStage - Loads crosstab data and mapping files from CSV sources
-2. DataJoiningStage - Combines monthly datasets and merges with geographical mappings
+The module implements three main pipeline stages:
+1. DataExtractionStage - Extracts compressed data files to directories
+2. DataLoadingStage - Loads crosstab data and mapping files from CSV files
+3. DataJoiningStage - Combines monthly datasets and merges with mappings
 
 Classes
 -------
+DataExtractionStage
+    Pipeline stage for extracting compressed data archives (zip files)
 DataLoadingStage
     Pipeline stage for loading NHS practice level crosstab data from CSV files
 DataJoiningStage
-    Pipeline stage for joining monthly data and combining with mapping information
+    Pipeline stage for joining monthly data and combining with mapping data
 
 Notes
 -----
-This module uses NHS_HERBOT for standardized data loading and column normalization
-to ensure consistency with NHS data processing standards. All CSV files are loaded
-with normalized column names using snake_case convention.
+This module uses NHS_HERBOT for standardized data loading and column
+normalization to ensure consistency with NHS data processing standards.
+All CSV files are loaded with normalized column names using snake_case
+convention.
+
+The separation of extraction and loading stages allows for better error
+handling and enables the pipeline to skip extraction if files are already
+available.
 
 Examples
 --------
 >>> config = NHSPracticeAnalysisConfig()
+>>> extraction_stage = DataExtractionStage(config)
 >>> loading_stage = DataLoadingStage(config)
 >>> joining_stage = DataJoiningStage()
 """
@@ -41,94 +51,87 @@ from oops_its_a_pipeline import PipelineStage
 from nhs_practice_pipeline.config import NHSPracticeAnalysisConfig
 
 
-class DataLoadingStage(PipelineStage):
+class DataExtractionStage(PipelineStage):
     """
-    Pipeline stage for loading NHS practice level crosstab data.
+    Pipeline stage for extracting compressed data files.
 
-    This stage loads monthly crosstab CSV files and mapping data from the
-    configured data directories using NHS_HERBOT for standardized processing.
+    This stage extracts compressed archives (zip files) containing NHS practice
+    level crosstab data and mapping files to the appropriate directories for
+    subsequent processing stages.
 
     Parameters
     ----------
     config : NHSPracticeAnalysisConfig
-        Configuration object containing data directory paths and processing
-        parameters including sample size limits.
-
-    Attributes
-    ----------
-    config : NHSPracticeAnalysisConfig
-        The configuration object passed during initialization.
+        Configuration object containing data directory paths and extraction
+        parameters.
 
     Methods
     -------
     run(context)
-        Execute the data loading stage and store results in pipeline context.
+        Execute the data extraction stage and store extracted file paths.
 
     Notes
     -----
-    The stage loads the following data:
-    - Monthly practice level crosstab files (May, June, July 2025)
-    - Practice mapping/lookup data for geographical information
-    - All data is processed through NHS_HERBOT for column normalization
-
-    Data files are expected in the following locations:
-    - Raw data: {config.raw_data_dir}/Practice_Level_Crosstab_*.csv
-    - Mapping data: {config.lookup_data_dir}/Mapping.csv
+    The extraction process:
+    - Searches for compressed files matching the configured pattern
+    - Extracts CSV files to appropriate directories (raw data vs lookup)
+    - Mapping files are placed in lookup directory
+    - Practice crosstab files are placed in raw directory
+    - Skips extraction if files already exist
 
     Examples
     --------
     >>> config = NHSPracticeAnalysisConfig()
-    >>> stage = DataLoadingStage(config)
+    >>> stage = DataExtractionStage(config)
     >>> context = {}
     >>> updated_context = stage.run(context)
     """
 
     def __init__(self, config: NHSPracticeAnalysisConfig):
         """
-        Initialize the data loading stage.
+        Initialize the data extraction stage.
 
         Parameters
         ----------
         config : NHSPracticeAnalysisConfig
-            Configuration object containing data paths and parameters.
+            Configuration object containing extraction parameters.
         """
-        super().__init__(outputs="raw_data", name="data_loading")
+        super().__init__(outputs="extracted_files", name="data_extraction")
         self.config = config
 
-    def _extract_compressed_files(self):
+    def run(self, context):
         """
-        Extract compressed data files to raw data directory.
+        Extract compressed data files to appropriate directories.
 
-        This method searches for compressed files (zip archives) in the
-        compressed data directory and extracts them to the raw data directory
-        if they haven't been extracted already.
+        Parameters
+        ----------
+        context : dict
+            Pipeline execution context for storing stage outputs.
 
         Returns
         -------
-        list
-            List of extracted file paths.
-
-        Notes
-        -----
-        Only extracts files if auto_extract_compressed is True in config.
-        Checks if files already exist to avoid unnecessary re-extraction.
+        dict
+            Updated pipeline context containing extracted file paths.
         """
         if not self.config.auto_extract_compressed:
-            return []
+            logger.info("Auto extraction disabled, skipping extraction stage")
+            self._store_outputs(context, [])
+            return context
+
+        logger.info("Extracting compressed data files...")
 
         compressed_dir = Path(self.config.compressed_data_dir)
         raw_dir = Path(self.config.raw_data_dir)
         raw_dir.mkdir(exist_ok=True)
 
         extracted_files = []
-
-        # Find all zip files in compressed directory
-        zip_files = list(compressed_dir.glob(self.config.compressed_file_pattern))
+        zip_files = list(
+            compressed_dir.glob(self.config.compressed_file_pattern)
+        )
         
         for zip_path in zip_files:
             logger.info(f"Found compressed file: {zip_path}")
             
-            # Extract if not already done
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
                 for member in zip_ref.namelist():
                     if member.endswith('.csv'):
@@ -141,8 +144,7 @@ class DataLoadingStage(PipelineStage):
                             extracted_path = raw_dir / member
                             
                         if not extracted_path.exists():
-                            logger.info(f"Extracting {member} to {extracted_path}")
-                            # Extract to appropriate directory
+                            logger.info(f"Extracting {member}")
                             if 'mapping' in member.lower():
                                 zip_ref.extract(member, dest_dir)
                             else:
@@ -152,7 +154,60 @@ class DataLoadingStage(PipelineStage):
                             logger.info(f"File exists: {extracted_path}")
                             extracted_files.append(extracted_path)
 
-        return extracted_files
+        logger.info(f"Extraction complete: {len(extracted_files)} files")
+        self._store_outputs(context, extracted_files)
+        return context
+
+
+class DataLoadingStage(PipelineStage):
+    """
+    Pipeline stage for loading extracted CSV files.
+
+    This stage loads monthly crosstab CSV files and mapping data that have
+    been extracted by the DataExtractionStage, using NHS_HERBOT for
+    standardized processing and column normalization.
+
+    Parameters
+    ----------
+    config : NHSPracticeAnalysisConfig
+        Configuration object containing data directory paths and processing
+        parameters including sample size limits.
+
+    Methods
+    -------
+    run(context)
+        Execute the data loading stage and store results in pipeline context.
+
+    Notes
+    -----
+    The stage loads:
+    - Monthly practice level crosstab files from raw data directory
+    - Practice mapping/lookup data for geographical information
+    - All data is processed through NHS_HERBOT for column normalization
+
+    Examples
+    --------
+    >>> config = NHSPracticeAnalysisConfig()
+    >>> stage = DataLoadingStage(config)
+    >>> context = {"extracted_files": file_paths}
+    >>> updated_context = stage.run(context)
+    """
+
+    def __init__(self, config: NHSPracticeAnalysisConfig):
+        """
+        Initialize the data loading stage.
+
+        Parameters
+        ----------
+        config : NHSPracticeAnalysisConfig
+            Configuration object containing data paths and parameters.
+        """
+        super().__init__(
+            inputs="extracted_files",
+            outputs="raw_data",
+            name="data_loading"
+        )
+        self.config = config
 
     def _discover_csv_files(self):
         """
@@ -162,22 +217,15 @@ class DataLoadingStage(PipelineStage):
         -------
         dict
             Dictionary mapping dataset names to file paths.
-
-        Notes
-        -----
-        Uses the csv_file_pattern from config to find relevant CSV files.
-        Automatically generates dataset names from filenames.
         """
         raw_dir = Path(self.config.raw_data_dir)
         csv_files = {}
 
-        # Use glob to find CSV files matching the pattern
         pattern = str(raw_dir / self.config.csv_file_pattern)
         matching_files = glob.glob(pattern)
 
         for file_path in matching_files:
             path_obj = Path(file_path)
-            # Generate dataset name from filename (remove extension)
             dataset_name = path_obj.stem
             csv_files[dataset_name] = path_obj
             logger.info(f"Discovered dataset: {dataset_name} -> {path_obj}")
@@ -186,34 +234,21 @@ class DataLoadingStage(PipelineStage):
 
     def run(self, context):
         """
-        Load NHS practice level crosstab data from CSV files.
-
-        This method loads monthly crosstab data and mapping files using
-        NHS_HERBOT for standardized data processing and column normalization.
+        Load NHS practice level crosstab data from extracted CSV files.
 
         Parameters
         ----------
         context : dict
-            Pipeline execution context for storing stage outputs.
+            Pipeline execution context containing extracted file paths.
 
         Returns
         -------
         dict
             Updated pipeline context containing loaded datasets.
-
-        Notes
-        -----
-        Loaded data includes:
-        - Monthly crosstab data with normalized column names
-        - Practice mapping data for geographical analysis
-        - Error handling for missing files with appropriate warnings
         """
         logger.info("Loading NHS practice level crosstab data...")
 
-        # Step 1: Extract compressed files if needed
-        self._extract_compressed_files()
-
-        # Step 2: Dynamically discover CSV files
+        # Discover CSV files to load
         csv_files = self._discover_csv_files()
 
         if not csv_files:
@@ -224,7 +259,7 @@ class DataLoadingStage(PipelineStage):
         mapping_file = Path(self.config.lookup_data_dir) / "Mapping.csv"
         loaded_data = {}
 
-        # Step 3: Load discovered CSV files
+        # Load discovered CSV files
         for month, file_path in csv_files.items():
             if file_path.exists():
                 logger.info(f"Loading {month} data from {file_path}")
@@ -246,7 +281,7 @@ class DataLoadingStage(PipelineStage):
             else:
                 logger.warning(f"File not found: {file_path}")
 
-        # Step 4: Load mapping data
+        # Load mapping data
         if mapping_file.exists():
             logger.info(f"Loading mapping data from {mapping_file}")
             try:

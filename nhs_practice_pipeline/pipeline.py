@@ -37,6 +37,7 @@ from loguru import logger
 
 from nhs_practice_pipeline.config import NHSPracticeAnalysisConfig
 from nhs_practice_pipeline.data_processing import (
+    DataExtractionStage,
     DataLoadingStage,
     DataJoiningStage,
 )
@@ -99,6 +100,7 @@ class NHSPracticeAnalysisPipeline(Pipeline):
             Configuration object containing all pipeline parameters.
         """
         stages = [
+            DataExtractionStage(config),
             DataLoadingStage(config),
             DataJoiningStage(),
             SummarisationStage(config),

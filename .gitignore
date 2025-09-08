@@ -215,43 +215,21 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# NHS Pipeline Data - Ignore outputs but keep inputs
-# Keep input data (compressed archives and lookups)
-# Keep structure but ignore data
+# NHS Pipeline Data - Track inputs only, ignore all generated outputs
+# Ignore all data directory contents
+data/
+
+# Keep compressed input data and documentation
+!data/
 !data/compressed/
 !data/compressed/**
-!data/lookup/
-!data/lookup/.gitkeep
 !data/ABOUT_DATA.md
 
-# Ignore extracted raw data files
-data/raw/*.csv
-data/raw/*.txt
-data/raw/*.json
-data/raw/*.xlsx
-data/raw/*.parquet
-!data/raw/.gitkeep
+# Keep directory structure markers
+!data/*/.gitkeep
 
-# Ignore processed outputs
-data/processed/*.csv
-data/processed/*.txt
-data/processed/*.json
-data/processed/*.xlsx
-data/processed/*.parquet
-!data/processed/.gitkeep
-
-# Ignore extracted lookup files (dynamically extracted from compressed)
-data/lookup/*.csv
-data/lookup/*.txt
-data/lookup/*.json
-data/lookup/*.xlsx
-data/lookup/*.parquet
-
-# Ignore generated figures
-figures/*.png
-figures/*.jpg
-figures/*.jpeg
-figures/*.pdf
+# Ignore all generated figures
+figures/*
 figures/*.svg
 !figures/.gitkeep
 
