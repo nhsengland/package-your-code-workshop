@@ -1,0 +1,1919 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="NHS Data Science Workshop - Package Your Code">
+      
+      
+        <meta name="author" content="Joseph Wilson - NHS England - Data Science and Applied AI Team">
+      
+      
+        <link rel="canonical" href="https://nhsengland.github.io/package-your-code-workshop/workshops/dependency_management/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../packaging_pyproject/">
+      
+      
+      <link rel="icon" href="../../images/favicon/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.19">
+    
+    
+      
+        <title>Dependency Management - Package Your Code Workshop</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--<type>:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M13%2014h-2V9h2m0%209h-2v-2h2M1%2021h22L12%202z%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/nhs_style.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#dependency-management-from-pip-to-uv" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      <!--
+  NHS England Data Science custom header - based on nhsengland/datascience
+-->
+
+<!-- Determine class according to configuration -->
+
+
+  
+
+
+<!-- Header -->
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav
+    class="md-header__inner md-grid"
+    aria-label="header.title"
+  >
+
+    <!-- Button to open drawer -->
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+
+    <!-- Link to home -->
+    <a
+      href="../.."
+      title="Package Your Code Workshop"
+      class="md-header__button md-logo-nhs"
+      aria-label="Package Your Code Workshop"
+      data-md-component="logo"
+    >
+      
+  <img src="../../images/logo/nhs-blue-on-white.jpg" alt="logo">
+
+    </a>
+
+    <!-- Header title -->
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Package Your Code Workshop
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Dependency Management
+            
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color palette -->
+    
+
+    <!-- Site language selector -->
+    
+
+    <!-- Button to open search modal -->
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+
+      <!-- Search interface -->
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    <!-- Repository information -->
+    
+      <div class="md-header__source">
+        <a href="https://github.com/nhsengland/package-your-code-workshop" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    package-your-code-workshop
+  </div>
+</a>
+      </div>
+    
+  </nav>
+
+  <!-- Navigation tabs (sticky) -->
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../getting_started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Workshops
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../api_reference/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Package Your Code Workshop" class="md-nav__button md-logo" aria-label="Package Your Code Workshop" data-md-component="logo">
+      
+  <img src="../../images/logo/nhs-blue-on-white.jpg" alt="logo">
+
+    </a>
+    Package Your Code Workshop
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/nhsengland/package-your-code-workshop" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    package-your-code-workshop
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Workshops
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Workshops
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Dependency Management
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dependency Management
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#task-1-understanding-traditional-python-dependency-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 1: Understanding Traditional Python Dependency Management
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Task 1: Understanding Traditional Python Dependency Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-create-a-virtual-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 Create a Virtual Environment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-examine-current-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 Examine Current Dependencies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-install-dependencies-and-observe-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 Install Dependencies and Observe Complexity
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-traditional-approach-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Understanding Traditional Approach Limitations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-2-organizing-dependencies-with-pyprojecttoml" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 2: Organizing Dependencies with pyproject.toml
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Task 2: Organizing Dependencies with pyproject.toml">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-understanding-pyprojecttoml-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Understanding pyproject.toml Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-add-project-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Add Project Dependencies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-test-the-new-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 Test the New Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-3-introducing-uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 3: Introducing UV
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Task 3: Introducing UV">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-install-uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Install UV
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-migrate-existing-project-to-uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 Migrate Existing Project to UV
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-practice-selective-installation-with-uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 Practice: Selective Installation with UV
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 Practice: Selective Installation with UV">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#update-pyprojecttoml-for-uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      Update pyproject.toml for UV
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practice-different-installation-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practice Different Installation Patterns
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-alternative-building-a-project-from-scratch-with-uv" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 Alternative: Building a Project from Scratch with UV
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-understanding-uv-lockfiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.5 Understanding UV Lockfiles
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-4-working-with-uv-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 4: Working with UV in Practice
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Task 4: Working with UV in Practice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-adding-and-removing-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 Adding and Removing Dependencies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-managing-environments" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 Managing Environments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-running-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Running Commands
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-command-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Migration Command Reference
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practices
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dependency-group-organization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependency Group Organization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installation-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation Patterns
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#working-on-locked-down-platforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Working on Locked-Down Platforms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#do-this" class="md-nav__link">
+    <span class="md-ellipsis">
+      Do This
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avoid-this" class="md-nav__link">
+    <span class="md-ellipsis">
+      Avoid This
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Common Issues
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checkpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checkpoint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Resources
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Additional Resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rap-community-of-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      RAP Community of Practice
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uv-modern-python-package-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      UV (Modern Python Package Manager)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-project-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Python Project Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traditional-python-packaging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Traditional Python Packaging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practices-standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      Best Practices &amp; Standards
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../packaging_pyproject/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Packaging with pyproject.toml
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mkdocs_documentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Documentation with MkDocs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Bonus Content
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            Bonus Content
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cookiecutter_templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cookiecutter Templates
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../precommit_hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pre-Commit Hooks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../github_actions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CI/CD with GitHub Actions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../api_reference/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+
+
+
+
+    
+
+                  
+
+
+  
+  
+
+
+<h1 id="dependency-management-from-pip-to-uv">Dependency Management: From pip to UV</h1>
+<p>Learn how to modernize your Python dependency management by building on traditional <code>pip + venv</code> workflows and transitioning to modern tools like <code>uv</code> for better organization and performance.</p>
+<div class="admonition success">
+<p class="admonition-title">Learning Objectives</p>
+<ul>
+<li>Master pip + venv fundamentals that form the foundation of Python dependency management</li>
+<li>Organize dependencies using <code>pyproject.toml</code> for better structure and maintainability</li>
+<li>Understand how simple requirements become complex dependency trees</li>
+<li>Introduce UV as a modern Python package manager built on solid foundations</li>
+<li>Create reproducible environments using lockfiles and dependency groups</li>
+</ul>
+</div>
+<details class="info">
+<summary>Why This Matters for RAP</summary>
+<p>This workshop directly supports <a href="https://nhsdigital.github.io/rap-community-of-practice/introduction_to_RAP/levels_of_RAP/#silver-rap-implementing-best-practice">Silver RAP</a> by teaching you to include comprehensive dependency information in your repository. You'll learn to structure dependencies using <code>pyproject.toml</code>, which not only ensures reproducibility but also shapes your analytical pipeline into a proper package - a key step toward Gold RAP's "code is fully packaged" requirement.</p>
+</details>
+<h2 id="task-1-understanding-traditional-python-dependency-management">Task 1: Understanding Traditional Python Dependency Management</h2>
+<p>Let's start by setting up a traditional Python environment to understand the current approach and its limitations.</p>
+<h3 id="11-create-a-virtual-environment">1.1 Create a Virtual Environment</h3>
+<p>First, let's create a clean virtual environment using the standard <code>venv</code> module:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Create a new virtual environment</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Activate the virtual environment</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Verify we&#39;re in the virtual environment</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>which<span class="w"> </span>python
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Virtual Environment Basics</p>
+<p><a href="https://docs.python.org/3/tutorial/venv.html">Virtual environments</a> isolate your project dependencies from your system Python installation. The <code>.venv</code> directory contains a complete Python installation specific to your project.</p>
+</div>
+<h3 id="12-examine-current-dependencies">1.2 Examine Current Dependencies</h3>
+<p>Let's look at what dependencies our project needs:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># View the current requirements file</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>cat<span class="w"> </span>requirements.txt
+</code></pre></div>
+<p>You should see a mix of dependencies including documentation tools, development tools, and core project dependencies.</p>
+<h3 id="13-install-dependencies-and-observe-complexity">1.3 Install Dependencies and Observe Complexity</h3>
+<p>Now let's install these dependencies and see what actually gets installed:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Install all requirements</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># See what was actually installed (this will be much longer!)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>pip<span class="w"> </span>freeze
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Dependency Explosion</p>
+<p>Notice how our simple requirements file with ~10 packages resulted in many more installed packages. These are sub-dependencies (dependencies of dependencies) that <a href="https://pip.pypa.io/en/stable/topics/dependency-resolution/">pip resolved automatically</a>.</p>
+</div>
+<h3 id="understanding-traditional-approach-limitations">Understanding Traditional Approach Limitations</h3>
+<p>The traditional <code>pip + venv</code> approach works well for basic projects but has some challenges as projects grow:</p>
+<ul>
+<li><strong>Mixed dependency purposes</strong>: Production, development, and documentation dependencies are all in one file</li>
+<li><strong>Sub-dependency visibility</strong>: <code>pip freeze</code> shows all packages, making it hard to distinguish your direct dependencies</li>
+<li><strong>Slower resolution</strong>: <a href="https://peps.python.org/pep-0508/">pip can be slow</a> with complex dependency trees</li>
+<li><strong>No built-in lockfiles</strong>: Reproducible environments require manual <a href="https://pip.pypa.io/en/stable/cli/pip_freeze/"><code>pip freeze</code></a> management</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">pip + venv is Still Valid</p>
+<p>Don't worry - <code>pip + venv</code> is still a perfectly valid approach for many projects! We're building on this solid foundation, not replacing it entirely.</p>
+</div>
+<h2 id="task-2-organizing-dependencies-with-pyprojecttoml">Task 2: Organizing Dependencies with pyproject.toml</h2>
+<p>Before we introduce UV, let's improve our dependency organization using the modern <code>pyproject.toml</code> standard.</p>
+<h3 id="21-understanding-pyprojecttoml-structure">2.1 Understanding pyproject.toml Structure</h3>
+<p>The <a href="https://peps.python.org/pep-0621/"><code>pyproject.toml</code></a> file is the modern standard for Python project configuration. For detailed guidance on writing pyproject.toml files, see the <a href="https://packaging.python.org/en/latest/guides/writing-pyproject-toml/">official writing guide</a>. Let's examine our current minimal setup:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># View current pyproject.toml</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>cat<span class="w"> </span>pyproject.toml
+</code></pre></div>
+<h3 id="22-add-project-dependencies">2.2 Add Project Dependencies</h3>
+<p>Let's organize our dependencies by purpose. Open <code>pyproject.toml</code> and add the following sections:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">[project]</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;package-your-code-workshop&quot;</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0.1.0&quot;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;A workshop demonstrating Python packaging best practices&quot;</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="s2">&quot;pandas&gt;=2.1.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="s2">&quot;numpy&gt;=1.25.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="s2">&quot;matplotlib&gt;=3.7.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="s2">&quot;seaborn&gt;=0.12.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span><span class="s2">&quot;plotly&gt;=5.15.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="s2">&quot;git+https://github.com/nhsengland/oops-its-a-pipeline.git&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="s2">&quot;git+https://github.com/nhsengland/nhs_herbot.git&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="p">]</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="k">[project.optional-dependencies]</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="n">docs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">    </span><span class="s2">&quot;mkdocs&gt;=1.5.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">    </span><span class="s2">&quot;mkdocs-material&gt;=9.0.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">    </span><span class="s2">&quot;mkdocstrings&gt;=0.22.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">    </span><span class="s2">&quot;mkdocstrings-python&gt;=1.0.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="p">]</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="n">dev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="w">    </span><span class="s2">&quot;ruff&gt;=0.4.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="w">    </span><span class="s2">&quot;pytest&gt;=7.4.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="w">    </span><span class="s2">&quot;black&gt;=23.7.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="w">    </span><span class="s2">&quot;isort&gt;=5.12.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a><span class="p">]</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="k">[tool.setuptools.packages.find]</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="n">include</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;practice_level_gp_appointments*&quot;</span><span class="p">]</span>
+</code></pre></div>
+<details class="info">
+<summary>Why Use Optional Dependencies?</summary>
+<p><strong>Optional dependencies</strong> let you group related packages together and install them selectively:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="w">              </span><span class="c1"># Core dependencies only</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>dev<span class="o">]</span><span class="w">         </span><span class="c1"># Core + development tools</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>docs<span class="o">]</span><span class="w">        </span><span class="c1"># Core + documentation tools</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>dev,docs<span class="o">]</span><span class="w">    </span><span class="c1"># Core + dev + docs</span>
+</code></pre></div>
+</details>
+<details class="info">
+<summary>Understanding the Different Dependency Types</summary>
+<p><strong>Core Dependencies</strong> (<code>dependencies</code>): Required for your application to run in production
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="s2">&quot;pandas&gt;=2.1.0&quot;</span><span class="p">,</span><span class="w">      </span><span class="c1"># Data manipulation</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="s2">&quot;numpy&gt;=1.25.0&quot;</span><span class="p">,</span><span class="w">      </span><span class="c1"># Numerical computing</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="s2">&quot;matplotlib&gt;=3.7.0&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Basic plotting</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">]</span>
+</code></pre></div></p>
+<p><strong>Development Dependencies</strong> (<code>dev</code> group): Tools needed during development
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">[project.optional-dependencies]</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">dev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="s2">&quot;ruff&gt;=0.4.0&quot;</span><span class="p">,</span><span class="w">        </span><span class="c1"># Linting and formatting</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="s2">&quot;pytest&gt;=7.4.0&quot;</span><span class="p">,</span><span class="w">      </span><span class="c1"># Testing framework</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="s2">&quot;black&gt;=23.7.0&quot;</span><span class="p">,</span><span class="w">      </span><span class="c1"># Code formatting</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="p">]</span>
+</code></pre></div></p>
+<p><strong>Documentation Dependencies</strong> (<code>docs</code> group): Tools needed to build documentation
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">docs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="s2">&quot;mkdocs&gt;=1.5.0&quot;</span><span class="p">,</span><span class="w">           </span><span class="c1"># Documentation generator</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="s2">&quot;mkdocs-material&gt;=9.0.0&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1"># Material theme</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="p">]</span>
+</code></pre></div></p>
+</details>
+<div class="admonition tip">
+<p class="admonition-title">Why Separate Groups?</p>
+<p>Now you can install exactly what you need:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># Install everything (current approach)</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt<span class="w">  </span><span class="c1"># ~50 packages</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># Install selectively with pyproject.toml</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="w">              </span><span class="c1"># Core dependencies only</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>dev<span class="o">]</span><span class="w">         </span><span class="c1"># Core + development tools</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>docs<span class="o">]</span><span class="w">        </span><span class="c1"># Core + documentation tools</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>dev,docs<span class="o">]</span><span class="w">    </span><span class="c1"># Everything</span>
+</code></pre></div>
+</div>
+<details class="warning">
+<summary>Optional Dependencies vs Dependency Groups</summary>
+<p>We're using <code>optional-dependencies</code> because it works with pip today. There's also a newer <a href="https://peps.python.org/pep-0735/"><code>dependency-groups</code></a> approach:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Current approach - works with pip</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">[project.optional-dependencies]</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">dev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;pytest&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ruff&quot;</span><span class="p">]</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1"># Newer approach - for modern tools like UV</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="k">[dependency-groups]</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="n">dev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;pytest&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ruff&quot;</span><span class="p">]</span>
+</code></pre></div>
+<p>We'll use the newer approach when we introduce UV!</p>
+</details>
+<h3 id="23-test-the-new-structure">2.3 Test the New Structure</h3>
+<p>Let's clean our environment and test our new dependency structure:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Deactivate and remove the old environment</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>deactivate
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>rm<span class="w"> </span>-rf<span class="w"> </span>.venv
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1"># Create a fresh environment</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="c1"># Install just core dependencies</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="c1"># Test that our package is accessible</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import practice_level_gp_appointments; print(&#39;Success!&#39;)&quot;</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="c1"># Now install development tools too</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>dev<span class="o">]</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="c1"># Install everything</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>dev,docs<span class="o">]</span>
+</code></pre></div>
+<h2 id="task-3-introducing-uv">Task 3: Introducing UV</h2>
+<p>Now let's introduce <a href="https://docs.astral.sh/uv/">UV</a>, a modern Python package manager built in <a href="https://www.rust-lang.org/">Rust</a> that builds on the foundations we've established.</p>
+<h3 id="31-install-uv">3.1 Install UV</h3>
+<p>Let's install <a href="https://docs.astral.sh/uv/">UV</a> on your system:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Install UV (macOS/Linux)</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>curl<span class="w"> </span>-LsSf<span class="w"> </span>https://astral.sh/uv/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1"># Restart your shell or source the new PATH</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="nb">source</span><span class="w"> </span>~/.bashrc<span class="w">  </span><span class="c1"># or ~/.zshrc depending on your shell</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="c1"># Verify installation</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>uv<span class="w"> </span>--version
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Windows Installation</p>
+<p>On Windows, use: <code>powershell -c "irm https://astral.sh/uv/install.ps1 | iex"</code>. For more installation options, see the <a href="https://docs.astral.sh/uv/getting-started/installation/">UV installation guide</a>.</p>
+</div>
+<h3 id="32-migrate-existing-project-to-uv">3.2 Migrate Existing Project to UV</h3>
+<p>Let's migrate our existing project to use UV while keeping our pyproject.toml structure. For a comprehensive migration guide, see <a href="https://docs.astral.sh/uv/guides/migration/pip-to-project/#migrating-from-pip-to-a-uv-project">Migrating from pip to a UV project</a>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># First, clean the current environment</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>deactivate
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>rm<span class="w"> </span>-rf<span class="w"> </span>.venv
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="c1"># Create a UV-managed virtual environment</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>uv<span class="w"> </span>venv
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="c1"># Activate the environment</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="c1"># Install dependencies from pyproject.toml</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>uv<span class="w"> </span>sync<span class="w"> </span>--all-groups
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">UV Sync Command</p>
+<p><code>uv sync</code> reads your <code>pyproject.toml</code> and installs all dependencies. The <code>--all-groups</code> flag includes all dependency groups (dev, docs, etc.).</p>
+</div>
+<h3 id="33-practice-selective-installation-with-uv">3.3 Practice: Selective Installation with UV</h3>
+<p>Now let's practice using UV's dependency groups in different ways. We'll convert our <code>pyproject.toml</code> to use the modern <code>dependency-groups</code> syntax first.</p>
+<h4 id="update-pyprojecttoml-for-uv">Update pyproject.toml for UV</h4>
+<p>Replace the <code>[project.optional-dependencies]</code> section with the modern <a href="https://peps.python.org/pep-0735/"><code>dependency-groups</code></a> approach:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">[dependency-groups]</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">docs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span><span class="s2">&quot;mkdocs&gt;=1.5.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">    </span><span class="s2">&quot;mkdocs-material&gt;=9.0.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">    </span><span class="s2">&quot;mkdocstrings&gt;=0.22.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">    </span><span class="s2">&quot;mkdocstrings-python&gt;=1.0.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="p">]</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="n">dev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">    </span><span class="s2">&quot;ruff&gt;=0.4.0&quot;</span><span class="p">,</span><span class="w">        </span><span class="c1"># Fast Python linter</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">    </span><span class="s2">&quot;pytest&gt;=7.4.0&quot;</span><span class="p">,</span><span class="w">      </span><span class="c1"># Testing framework</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">    </span><span class="s2">&quot;black&gt;=23.7.0&quot;</span><span class="p">,</span><span class="w">      </span><span class="c1"># Code formatter</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">    </span><span class="s2">&quot;isort&gt;=5.12.0&quot;</span><span class="p">,</span><span class="w">      </span><span class="c1"># Import sorter</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="p">]</span>
+</code></pre></div>
+<h4 id="practice-different-installation-patterns">Practice Different Installation Patterns</h4>
+<p>Let's practice installing dependencies for different use cases:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># Start with a clean slate</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>deactivate
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>rm<span class="w"> </span>-rf<span class="w"> </span>.venv
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="c1"># 1. Core dependencies only (production-like)</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>uv<span class="w"> </span>venv
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>uv<span class="w"> </span>sync
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>pip<span class="w"> </span>list<span class="w">  </span><span class="c1"># See what got installed</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="c1"># 2. Add development tools</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>uv<span class="w"> </span>sync<span class="w"> </span>--group<span class="w"> </span>dev
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>pip<span class="w"> </span>list<span class="w">  </span><span class="c1"># Notice the additional packages</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="c1"># 3. Clean and try docs only</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>deactivate
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>rm<span class="w"> </span>-rf<span class="w"> </span>.venv
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>uv<span class="w"> </span>venv
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>uv<span class="w"> </span>sync<span class="w"> </span>--group<span class="w"> </span>docs
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>pip<span class="w"> </span>list<span class="w">  </span><span class="c1"># Just core + docs packages</span>
+<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a>
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a><span class="c1"># 4. Everything for full development</span>
+<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a>uv<span class="w"> </span>sync<span class="w"> </span>--all-groups
+<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a>pip<span class="w"> </span>list<span class="w">  </span><span class="c1"># All packages</span>
+</code></pre></div>
+<details class="example">
+<summary>Real-World Scenarios</summary>
+<p><strong>New Developer Setup</strong>: A developer working on code (not docs)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>uv<span class="w"> </span>sync<span class="w"> </span>--group<span class="w"> </span>dev
+</code></pre></div></p>
+<p><strong>Documentation Writer</strong>: Someone updating docs (not coding)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>uv<span class="w"> </span>sync<span class="w"> </span>--group<span class="w"> </span>docs
+</code></pre></div></p>
+<p><strong>Production Deployment</strong>: Server needs only core functionality
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>uv<span class="w"> </span>sync<span class="w">  </span><span class="c1"># No groups = core only</span>
+</code></pre></div></p>
+<p><strong>CI/CD Pipeline</strong>: Different jobs, different needs
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># Testing job</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">uv sync --group dev</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="c1"># Documentation job  </span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">uv sync --group docs</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="c1"># Production deployment</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">uv sync</span>
+</code></pre></div></p>
+</details>
+<h3 id="34-alternative-building-a-project-from-scratch-with-uv">3.4 Alternative: Building a Project from Scratch with UV</h3>
+<p>Let's also practice the "greenfield" approach - starting a completely new project with UV:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># Clean everything</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>deactivate
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>rm<span class="w"> </span>-rf<span class="w"> </span>.venv<span class="w"> </span>uv.lock
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="c1"># Initialize a new UV project</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>uv<span class="w"> </span>init<span class="w"> </span>--name<span class="w"> </span>package-your-code-workshop<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.12
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="c1"># Create and activate environment</span>
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>uv<span class="w"> </span>venv<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.12
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="c1"># Add dependencies one by one (UV builds pyproject.toml automatically)</span>
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>uv<span class="w"> </span>add<span class="w"> </span>pandas<span class="w"> </span>numpy<span class="w"> </span>matplotlib<span class="w"> </span>seaborn<span class="w"> </span>plotly
+<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>
+<a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a><span class="c1"># Add development dependencies</span>
+<a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>uv<span class="w"> </span>add<span class="w"> </span>--group<span class="w"> </span>dev<span class="w"> </span>ruff<span class="w"> </span>pytest<span class="w"> </span>black<span class="w"> </span>isort
+<a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>
+<a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a><span class="c1"># Add documentation dependencies  </span>
+<a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>uv<span class="w"> </span>add<span class="w"> </span>--group<span class="w"> </span>docs<span class="w"> </span>mkdocs<span class="w"> </span>mkdocs-material<span class="w"> </span>mkdocstrings<span class="w"> </span>mkdocstrings-python
+<a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a>
+<a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a><span class="c1"># Check what UV created</span>
+<a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a>cat<span class="w"> </span>pyproject.toml
+</code></pre></div>
+<details class="tip">
+<summary>UV Auto-Generation</summary>
+<p>UV automatically creates and updates your <code>pyproject.toml</code> as you add dependencies. This is great for new projects where you want to build up dependencies incrementally.</p>
+</details>
+<h3 id="35-understanding-uv-lockfiles">3.5 Understanding UV Lockfiles</h3>
+<p>UV automatically creates a <code>uv.lock</code> file for reproducible builds. Let's explore it:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1"># Check if lockfile exists</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>ls<span class="w"> </span>-la<span class="w"> </span>uv.lock
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="c1"># Look at the lockfile structure</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>head<span class="w"> </span>-20<span class="w"> </span>uv.lock
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="c1"># Install from exact lockfile versions</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>uv<span class="w"> </span>sync<span class="w"> </span>--frozen
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Always Commit Lockfiles</p>
+<p>Add <code>uv.lock</code> to version control to ensure everyone gets exactly the same dependency versions. This is essential for <a href="https://nhsdigital.github.io/rap-community-of-practice/introduction_to_RAP/levels_of_RAP/">RAP Gold standard</a> reproducibility - your analytical pipelines will run identically across different environments and team members.</p>
+</div>
+<h2 id="task-4-working-with-uv-in-practice">Task 4: Working with UV in Practice</h2>
+<p>Let's explore common UV workflows you'll use in daily development. For comprehensive guidance on UV project workflows, see the <a href="https://docs.astral.sh/uv/guides/projects/#working-on-projects">Working on Projects guide</a>.</p>
+<h3 id="41-adding-and-removing-dependencies">4.1 Adding and Removing Dependencies</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># Add a new dependency</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>uv<span class="w"> </span>add<span class="w"> </span>requests
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="c1"># Add a development dependency</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>uv<span class="w"> </span>add<span class="w"> </span>--group<span class="w"> </span>dev<span class="w"> </span>mypy
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="c1"># Remove a dependency</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>uv<span class="w"> </span>remove<span class="w"> </span>requests
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="c1"># Upgrade all dependencies</span>
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>uv<span class="w"> </span>lock<span class="w"> </span>--upgrade
+</code></pre></div>
+<h3 id="42-managing-environments">4.2 Managing Environments</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># Create environment with specific Python version</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>uv<span class="w"> </span>venv<span class="w"> </span>--python<span class="w"> </span><span class="m">3</span>.11
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="c1"># List available Python versions</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>uv<span class="w"> </span>python<span class="w"> </span>list
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="c1"># Install a specific Python version (if needed)</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>uv<span class="w"> </span>python<span class="w"> </span>install<span class="w"> </span><span class="m">3</span>.11
+</code></pre></div>
+<h3 id="43-running-commands">4.3 Running Commands</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># Run commands in the UV environment</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>--version
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="c1"># Run scripts</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>practice_level_gp_appointments/__main__.py
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="c1"># Run tools</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>uv<span class="w"> </span>run<span class="w"> </span>ruff<span class="w"> </span>check<span class="w"> </span>.
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">UV Run</p>
+<p><code>uv run</code> automatically activates the virtual environment and runs the command, even if you haven't manually activated the environment.</p>
+</div>
+<h2 id="migration-command-reference">Migration Command Reference</h2>
+<p>Here's a quick reference for migrating from pip workflows to UV:</p>
+<table>
+<thead>
+<tr>
+<th>Traditional pip</th>
+<th>Modern UV</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pip install package</code></td>
+<td><code>uv add package</code></td>
+<td>Add new dependency</td>
+</tr>
+<tr>
+<td><code>pip install -r requirements.txt</code></td>
+<td><code>uv sync</code></td>
+<td>Install all dependencies</td>
+</tr>
+<tr>
+<td><code>pip install -e .</code></td>
+<td><code>uv sync</code></td>
+<td>Install project in development mode</td>
+</tr>
+<tr>
+<td><code>pip freeze &gt; requirements.txt</code></td>
+<td><code>uv export &gt; requirements.txt</code></td>
+<td>Export current environment</td>
+</tr>
+<tr>
+<td><code>pip install --upgrade package</code></td>
+<td><code>uv add package --upgrade</code></td>
+<td>Upgrade package</td>
+</tr>
+<tr>
+<td><code>python script.py</code></td>
+<td><code>uv run python script.py</code></td>
+<td>Run Python script</td>
+</tr>
+</tbody>
+</table>
+<details class="info">
+<summary>Command Details</summary>
+<p><strong>Key differences to note</strong>:</p>
+<ul>
+<li><code>uv sync</code> installs your project and dependencies from <code>pyproject.toml</code></li>
+<li><code>uv export</code> creates requirements.txt from the current environment</li>
+<li><code>uv lock</code> updates the lockfile (separate from installation)</li>
+<li>All UV commands automatically handle virtual environments</li>
+</ul>
+</details>
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="dependency-group-organization">Dependency Group Organization</h3>
+<div class="admonition tip">
+<p class="admonition-title">Keep It Simple: Two Groups</p>
+<p><strong>For most projects, you only need two dependency groups</strong>:</p>
+<ul>
+<li><strong>Core dependencies</strong> (<code>dependencies</code>): What your app needs to run</li>
+<li><strong>Development dependencies</strong> (<code>dev</code>): Tools for coding, testing, linting</li>
+</ul>
+<p><strong>Simple, effective setup</strong>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">[project]</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;pandas&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;requests&quot;</span><span class="p">]</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="k">[dependency-groups]</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="n">dev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;pytest&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;ruff&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;black&quot;</span><span class="p">]</span>
+</code></pre></div></p>
+<p><strong>Installation</strong>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>uv<span class="w"> </span>sync<span class="w">          </span><span class="c1"># Production (core only)</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>uv<span class="w"> </span>sync<span class="w"> </span>--group<span class="w"> </span>dev<span class="w">  </span><span class="c1"># Development (core + dev tools)</span>
+</code></pre></div></p>
+</div>
+<details class="example">
+<summary>Advanced: More Granular Groups</summary>
+<p><strong>If your project grows complex, you can break down further</strong>:</p>
+<ul>
+<li><code>docs</code>: Documentation generation tools</li>
+<li><code>test</code>: Testing-specific dependencies (separate from general dev)</li>
+<li><code>typing</code>: Type checking tools (mypy, type stubs)</li>
+<li><code>jupyter</code>: Jupyter notebook dependencies</li>
+</ul>
+<p><strong>Example comprehensive setup</strong>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">[dependency-groups]</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="n">dev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ruff&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;isort&quot;</span><span class="p">]</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="n">test</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;pytest&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;pytest-cov&quot;</span><span class="p">]</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="n">docs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mkdocs&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;mkdocs-material&quot;</span><span class="p">]</span>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="n">typing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;mypy&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;types-requests&quot;</span><span class="p">]</span>
+</code></pre></div></p>
+<p><strong>But honestly, most projects don't need this complexity!</strong></p>
+</details>
+<h3 id="installation-patterns">Installation Patterns</h3>
+<div class="admonition example">
+<p class="admonition-title">Two Commands You'll Use Most</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="c1"># Production deployment</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>uv<span class="w"> </span>sync
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="c1"># Development work</span>
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>uv<span class="w"> </span>sync<span class="w"> </span>--group<span class="w"> </span>dev
+</code></pre></div>
+<p>That's it! Simple and effective.</p>
+</div>
+<details class="info">
+<summary>Other Installation Options</summary>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="c1"># Install everything (if you have multiple groups)</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>uv<span class="w"> </span>sync<span class="w"> </span>--all-groups
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="c1"># Install specific groups only</span>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>uv<span class="w"> </span>sync<span class="w"> </span>--group<span class="w"> </span>docs
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>uv<span class="w"> </span>sync<span class="w"> </span>--group<span class="w"> </span><span class="nb">test</span>
+<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>
+<a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a><span class="c1"># Multiple specific groups</span>
+<a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>uv<span class="w"> </span>sync<span class="w"> </span>--group<span class="w"> </span>dev<span class="w"> </span>--group<span class="w"> </span><span class="nb">test</span>
+</code></pre></div>
+</details>
+<h3 id="working-on-locked-down-platforms">Working on Locked-Down Platforms</h3>
+<div class="admonition warning">
+<p class="admonition-title">When You Can't Install UV</p>
+<p><strong>Many enterprise/NHS environments don't allow installing new tools like UV.</strong> The good news? The organized dependency structure still helps with traditional <a href="https://pip.pypa.io/en/stable/">pip</a>!</p>
+<p><strong>With organized pyproject.toml, you can still benefit</strong>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="c1"># Use pip with optional dependencies</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="w">              </span><span class="c1"># Core dependencies only</span>
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.<span class="o">[</span>dev<span class="o">]</span><span class="w">         </span><span class="c1"># Core + development tools</span>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="c1"># Or export to requirements files for teams</span>
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>uv<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--group<span class="w"> </span>dev<span class="w"> </span>&gt;<span class="w"> </span>requirements-dev.txt<span class="w">  </span><span class="c1"># (when UV is available)</span>
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="c1"># Then share requirements-dev.txt for pip users</span>
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-dev.txt
+</code></pre></div></p>
+<p><strong>Key benefits even with just pip</strong>:
+- Clear separation of production vs development dependencies
+- Easy to share specific requirement sets with team members
+- Future-ready when you can eventually use modern tools like <a href="https://python-poetry.org/">Poetry</a> or <a href="https://hatch.pypa.io/">Hatch</a>
+- Better project organization and documentation</p>
+</div>
+<h3 id="do-this">Do This</h3>
+<ul>
+<li><strong>Organize dependencies</strong>: Use <code>pyproject.toml</code> to separate production and development dependencies</li>
+<li><strong>Use the tools available</strong>: UV when possible, pip when necessary - both work with organized dependencies</li>
+<li><strong>Pin appropriately</strong>: Use <code>&gt;=</code> for minimum versions, avoid overly specific pins</li>
+<li><strong>Document your setup</strong>: Make it clear how team members should install dependencies</li>
+<li><strong>Plan for constraints</strong>: Consider locked-down environments when choosing your approach</li>
+</ul>
+<h3 id="avoid-this">Avoid This</h3>
+<ul>
+<li><strong>All dependencies in one place</strong>: Don't mix production and development dependencies</li>
+<li><strong>Unpinned dependencies</strong>: Specify minimum versions for stability</li>
+<li><strong>Over-pinning</strong>: Avoid exact version pins unless absolutely necessary</li>
+<li><strong>Assuming everyone can use modern tools</strong>: Not everyone can install UV on their systems</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="common-issues">Common Issues</h3>
+<div class="admonition warning">
+<p class="admonition-title">Package Not Found</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="c1"># Clear cache and retry</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>uv<span class="w"> </span>cache<span class="w"> </span>clean
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>uv<span class="w"> </span>sync<span class="w"> </span>--all-groups
+</code></pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Version Conflicts</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="c1"># Use UV&#39;s conflict resolution options</span>
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>uv<span class="w"> </span>add<span class="w"> </span>package-name<span class="w"> </span>--resolution<span class="w"> </span>lowest-direct
+</code></pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Environment Issues</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="c1"># Start completely fresh</span>
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>rm<span class="w"> </span>-rf<span class="w"> </span>.venv<span class="w"> </span>uv.lock
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>uv<span class="w"> </span>venv
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>uv<span class="w"> </span>sync<span class="w"> </span>--all-groups
+</code></pre></div>
+</div>
+<h2 id="checkpoint">Checkpoint</h2>
+<p>Before moving to the next workshop, verify you can:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Create and activate virtual environments with both <code>venv</code> and <code>uv</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Understand the difference between direct and sub-dependencies</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Organize dependencies in <code>pyproject.toml</code> using dependency groups</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Install dependencies with both <code>pip</code> and <code>uv sync</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Add and remove packages using UV commands</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Understand the purpose of <code>uv.lock</code> files</li>
+</ul>
+<h2 id="next-steps">Next Steps</h2>
+<p>Excellent work! You've successfully modernized your dependency management workflow while building on solid <code>pip + venv</code> foundations.</p>
+<p><strong>Continue your learning journey</strong> - these workshops can be done in any order:</p>
+<ul>
+<li><a href="../packaging_pyproject/"><strong>Packaging with pyproject.toml</strong></a> - Make your code installable and reusable</li>
+<li><a href="../mkdocs_documentation/"><strong>Documentation with MkDocs</strong></a> - Create professional documentation</li>
+<li><a href="../precommit_hooks/"><strong>Pre-Commit Hooks</strong></a> - Automate code quality checks</li>
+<li><a href="../github_actions/"><strong>CI/CD with GitHub Actions</strong></a> - Automate testing and deployment</li>
+</ul>
+<h2 id="additional-resources">Additional Resources</h2>
+<h3 id="rap-community-of-practice">RAP Community of Practice</h3>
+<ul>
+<li><a href="https://nhsdigital.github.io/rap-community-of-practice/training_resources/python/virtual-environments/why-use-virtual-environments/">Why Use Virtual Environments</a> - RAP guidance on virtual environments for reproducible analysis</li>
+</ul>
+<h3 id="uv-modern-python-package-manager">UV (Modern Python Package Manager)</h3>
+<ul>
+<li><a href="https://docs.astral.sh/uv/">UV Documentation</a> - Complete UV guide and reference</li>
+<li><a href="https://docs.astral.sh/uv/guides/projects/#working-on-projects">UV Working on Projects</a> - Practical UV project workflows</li>
+<li><a href="https://docs.astral.sh/uv/guides/migration/pip-to-project/#migrating-from-pip-to-a-uv-project">UV Migration Guide</a> - Step-by-step pip to UV migration</li>
+<li><a href="https://docs.astral.sh/uv/pip/">UV vs pip Comparison</a> - Detailed comparison of tools</li>
+</ul>
+<h3 id="python-project-configuration">Python Project Configuration</h3>
+<ul>
+<li><a href="https://packaging.python.org/en/latest/guides/writing-pyproject-toml/">Writing pyproject.toml</a> - Official guide to pyproject.toml</li>
+<li><a href="https://peps.python.org/pep-0621/">PEP 621 - Project Metadata</a> - Standard for pyproject.toml</li>
+<li><a href="https://peps.python.org/pep-0735/">PEP 735 - Dependency Groups</a> - Modern dependency organization</li>
+</ul>
+<h3 id="traditional-python-packaging">Traditional Python Packaging</h3>
+<ul>
+<li><a href="https://packaging.python.org/">Python Packaging Guide</a> - Official Python packaging documentation</li>
+<li><a href="https://docs.python.org/3/tutorial/venv.html">Virtual Environments Guide</a> - Python.org official guide</li>
+<li><a href="https://pip.pypa.io/en/stable/user_guide/">pip User Guide</a> - Official pip documentation</li>
+</ul>
+<h3 id="best-practices-standards">Best Practices &amp; Standards</h3>
+<ul>
+<li><a href="https://packaging.python.org/en/latest/guides/">Python Packaging Best Practices</a> - Official packaging guidelines</li>
+<li><a href="https://semver.org/">Understanding Semantic Versioning</a> - Version specification standards</li>
+<li><a href="https://peps.python.org/">Python Enhancement Proposals (PEPs)</a> - Python standards and proposals</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <head>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+</head>
+
+<!-- Code for the next arrow from Material for MkDocs -->
+<footer class="md-footer">
+   
+  <nav
+    class="md-footer__inner md-grid"
+    aria-label="footer.title"
+    
+  >
+     
+    <a
+      href="../"
+      class="md-footer__link md-footer__link--prev"
+      aria-label="Previous: Workshop Overview"
+      rel="prev"
+    >
+      <div class="md-footer__button md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </div>
+      <div class="md-footer__title">
+        <div class="md-ellipsis">
+          <span class="md-footer__direction"> Previous </span>
+          Workshop Overview
+        </div>
+      </div>
+    </a>
+      
+    <a
+      href="../packaging_pyproject/"
+      class="md-footer__link md-footer__link--next"
+      aria-label="Next: Packaging with pyproject.toml"
+      rel="next"
+    >
+      <div class="md-footer__title">
+        <div class="md-ellipsis">
+          <span class="md-footer__direction"> Next </span>
+          Packaging with pyproject.toml
+        </div>
+      </div>
+      <div class="md-footer__button md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+      </div>
+    </a>
+    
+  </nav>
+  
+</footer>
+
+<footer class="footer">
+  <div class="footer_left">
+    <a href="mailto:datascience@nhs.net">Contact Us</a>
+    <p>Developed by <a href="https://www.england.nhs.uk/">NHS England</a> Direct Commissioning and the Data Science Profession</p>
+    <p>
+      View the Data Science team on
+      <a href="https://github.com/nhsengland/datascience"
+        >GitHub</a
+      >
+    </p>
+  </div>
+
+  <div class="legal">
+    <div class="footer_left">
+    <p>&copy; 2025 Crown Copyright (NHS England)</p>
+    <p>All content is available under the
+        <a
+          href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+          >Open Government Licence v3.0</a
+        >, except where otherwise stated.
+      </p>    
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["search.share", "content.code.annotate", "content.tabs.link", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.path", "navigation.top", "toc.integrate"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
+      
+        <script src="../../javascripts/mermaid.mjs" type="module"></script>
+      
+    
+  </body>
+</html>

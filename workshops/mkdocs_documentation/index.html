@@ -1,0 +1,1733 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="NHS Data Science Workshop - Package Your Code">
+      
+      
+        <meta name="author" content="Joseph Wilson - NHS England - Data Science and Applied AI Team">
+      
+      
+        <link rel="canonical" href="https://nhsengland.github.io/package-your-code-workshop/workshops/mkdocs_documentation/">
+      
+      
+        <link rel="prev" href="../packaging_pyproject/">
+      
+      
+        <link rel="next" href="../cookiecutter_templates/">
+      
+      
+      <link rel="icon" href="../../images/favicon/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.19">
+    
+    
+      
+        <title>Documentation with MkDocs - Package Your Code Workshop</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--<type>:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M13%2014h-2V9h2m0%209h-2v-2h2M1%2021h22L12%202z%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/nhs_style.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#documentation-with-mkdocs-from-setup-to-github-pages" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      <!--
+  NHS England Data Science custom header - based on nhsengland/datascience
+-->
+
+<!-- Determine class according to configuration -->
+
+
+  
+
+
+<!-- Header -->
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav
+    class="md-header__inner md-grid"
+    aria-label="header.title"
+  >
+
+    <!-- Button to open drawer -->
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+
+    <!-- Link to home -->
+    <a
+      href="../.."
+      title="Package Your Code Workshop"
+      class="md-header__button md-logo-nhs"
+      aria-label="Package Your Code Workshop"
+      data-md-component="logo"
+    >
+      
+  <img src="../../images/logo/nhs-blue-on-white.jpg" alt="logo">
+
+    </a>
+
+    <!-- Header title -->
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Package Your Code Workshop
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Documentation with MkDocs
+            
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color palette -->
+    
+
+    <!-- Site language selector -->
+    
+
+    <!-- Button to open search modal -->
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+
+      <!-- Search interface -->
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    <!-- Repository information -->
+    
+      <div class="md-header__source">
+        <a href="https://github.com/nhsengland/package-your-code-workshop" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    package-your-code-workshop
+  </div>
+</a>
+      </div>
+    
+  </nav>
+
+  <!-- Navigation tabs (sticky) -->
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../getting_started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Workshops
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../api_reference/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Package Your Code Workshop" class="md-nav__button md-logo" aria-label="Package Your Code Workshop" data-md-component="logo">
+      
+  <img src="../../images/logo/nhs-blue-on-white.jpg" alt="logo">
+
+    </a>
+    Package Your Code Workshop
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/nhsengland/package-your-code-workshop" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    package-your-code-workshop
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting_started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Workshops
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Workshops
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dependency_management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dependency Management
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../packaging_pyproject/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Packaging with pyproject.toml
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Documentation with MkDocs
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Documentation with MkDocs
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#task-1-understanding-mkdocs-and-material-theme-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 1: Understanding MkDocs and Material Theme Setup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Task 1: Understanding MkDocs and Material Theme Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-examine-the-current-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 Examine the Current Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-key-configuration-sections" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 Key Configuration Sections
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 Key Configuration Sections">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#site-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      Site Information
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#material-theme-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Material Theme Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#navigation-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Navigation Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-test-the-current-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 Test the Current Setup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-2-creating-api-documentation-with-mkdocstrings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 2: Creating API Documentation with mkdocstrings
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Task 2: Creating API Documentation with mkdocstrings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-understand-mkdocstrings-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Understand mkdocstrings Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-examine-existing-python-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Examine Existing Python Modules
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-create-api-documentation-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 Create API Documentation Pages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-update-navigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4 Update Navigation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-test-api-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.5 Test API Documentation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-3-customizing-and-organizing-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 3: Customizing and Organizing Documentation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Task 3: Customizing and Organizing Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-create-a-comprehensive-api-reference-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Create a Comprehensive API Reference Index
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-update-navigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 Update Navigation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-test-your-api-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 Test Your API Documentation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#task-4-deploying-to-github-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Task 4: Deploying to GitHub Pages
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Task 4: Deploying to GitHub Pages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-understanding-github-pages-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 Understanding GitHub Pages Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-fork-the-repository-for-participants" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 Fork the Repository (For Participants)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-enable-github-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Enable GitHub Pages
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-deploy-using-mkdocs" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 Deploy Using MkDocs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-test-your-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5 Test Your Deployment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#checkpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      Checkpoint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#additional-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Additional Resources
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Additional Resources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mkdocs-and-material-theme" class="md-nav__link">
+    <span class="md-ellipsis">
+      MkDocs and Material Theme
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Documentation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#github-pages-and-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      GitHub Pages and Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rap-documentation-standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      RAP Documentation Standards
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Bonus Content
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            Bonus Content
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cookiecutter_templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cookiecutter Templates
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../precommit_hooks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pre-Commit Hooks
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../github_actions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CI/CD with GitHub Actions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../api_reference/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+
+
+
+
+    
+
+                  
+
+
+  
+  
+
+
+<h1 id="documentation-with-mkdocs-from-setup-to-github-pages">Documentation with MkDocs: From Setup to GitHub Pages</h1>
+<p>Learn how to create professional documentation for your Python projects using MkDocs Material, generate automatic API documentation, and deploy to GitHub Pages.</p>
+<div class="admonition success">
+<p class="admonition-title">Learning Objectives</p>
+<ul>
+<li>Set up MkDocs with Material theme and NHS styling</li>
+<li>Understand mkdocs.yml configuration structure</li>
+<li>Generate automatic API documentation with mkdocstrings</li>
+<li>Create and organize documentation pages</li>
+<li>Deploy your documentation to GitHub Pages</li>
+</ul>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Why This Matters for RAP</p>
+<p>Professional documentation is essential for <a href="https://nhsdigital.github.io/rap-community-of-practice/introduction_to_RAP/levels_of_RAP/#silver-rap-implementing-best-practice">Silver RAP</a>, which requires "well-documented code including user guidance, explanation of code structure &amp; methodology." This workshop teaches you to create documentation that meets these standards automatically.</p>
+</div>
+<h2 id="task-1-understanding-mkdocs-and-material-theme-setup">Task 1: Understanding MkDocs and Material Theme Setup</h2>
+<p>Let's explore how MkDocs is already configured in this repository with NHS Data Science team styling.</p>
+<h3 id="11-examine-the-current-setup">1.1 Examine the Current Setup</h3>
+<p>First, let's look at the mkdocs.yml configuration file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># View the MkDocs configuration</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>cat<span class="w"> </span>mkdocs.yml
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">MkDocs Basics</p>
+<p><a href="https://www.mkdocs.org/">MkDocs</a> is a fast, simple static site generator for building project documentation. <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a> is a popular theme that provides a modern, responsive design.</p>
+</div>
+<h3 id="12-key-configuration-sections">1.2 Key Configuration Sections</h3>
+<p>Let's understand the main parts of our mkdocs.yml:</p>
+<h4 id="site-information">Site Information</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">site_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Package Your Code Workshop</span><span class="w"> </span><span class="c1"># (1)!</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nt">site_description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NHS Data Science Workshop - Package Your Code</span><span class="w"> </span><span class="c1"># (2)!</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nt">site_author</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Joseph Wilson - NHS England - Data Science and Applied AI Team</span><span class="w"> </span><span class="c1"># (3)!</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nt">site_url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://nhsengland.github.io/package-your-code-workshop</span><span class="w"> </span><span class="c1"># (4)!</span>
+</code></pre></div>
+<ol>
+<li>Display name shown in browser tab and site header - keep it concise and descriptive</li>
+<li>Brief description for search engines and social media sharing - appears in meta tags</li>
+<li>Author information for attribution and contact - helps with project ownership clarity</li>
+<li>Full URL where the site will be deployed - enables proper linking and canonical URLs</li>
+</ol>
+<h4 id="material-theme-configuration">Material Theme Configuration</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">theme</span><span class="p">:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">material</span><span class="w"> </span><span class="c1"># (1)!</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">en</span><span class="w"> </span><span class="c1"># (2)!</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="nt">custom_dir</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">docs/overrides</span><span class="w"> </span><span class="c1"># (3)!</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="nt">palette</span><span class="p">:</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="nt">scheme</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span><span class="w"> </span><span class="c1"># (4)!</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="nt">primary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">indigo</span><span class="w"> </span><span class="c1"># (5)!</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span><span class="nt">logo</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">images/logo/nhs-blue-on-white.jpg</span><span class="w"> </span><span class="c1"># (6)!</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span><span class="nt">favicon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">images/favicon/favicon.ico</span><span class="w"> </span><span class="c1"># (7)!</span>
+</code></pre></div>
+<ol>
+<li>Use the Material theme for MkDocs - provides modern, responsive design</li>
+<li>Set the site language to English for proper accessibility and SEO</li>
+<li>Point to custom NHS templates and styling overrides</li>
+<li>Use the default (light) colour scheme - can also be 'slate' for dark mode</li>
+<li>Set primary colour to indigo to match NHS branding guidelines</li>
+<li>NHS logo displayed in the site header navigation</li>
+<li>Custom favicon for the browser tab - uses NHS branding</li>
+</ol>
+<h4 id="navigation-structure">Navigation Structure</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">nav</span><span class="p">:</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Home</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">index.md</span><span class="w"> </span><span class="c1"># (1)!</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Getting Started</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">getting_started.md</span><span class="w"> </span><span class="c1"># (2)!</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Workshops</span><span class="p">:</span><span class="w"> </span><span class="c1"># (3)!</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">workshops/index.md</span><span class="w"> </span><span class="c1"># (4)!</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Dependency Management</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">workshops/dependency_management.md</span><span class="w"> </span><span class="c1"># (5)!</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="c1"># ... more workshops</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">API Reference</span><span class="p">:</span><span class="w"> </span><span class="c1"># (6)!</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api_reference/index.md</span><span class="w"> </span><span class="c1"># (7)!</span>
+</code></pre></div>
+<ol>
+<li>Main landing page - provides project overview and quick start information</li>
+<li>Detailed setup guide for getting the project running locally</li>
+<li>Workshop section with dropdown navigation for all tutorials</li>
+<li>Workshop index page explaining the learning path and prerequisites</li>
+<li>Individual workshop pages - each covers a specific packaging topic</li>
+<li>API Reference section for automatically generated documentation</li>
+<li>API index page with overview of all modules and quick examples</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">NHS Styling</p>
+<p>This repository uses NHS branding with custom colours, logos, and styling. The <code>custom_dir: docs/overrides</code> points to NHS-specific templates and the <code>extra_css</code> section includes NHS styling.</p>
+</div>
+<h3 id="13-test-the-current-setup">1.3 Test the Current Setup</h3>
+<p>Let's run the documentation server to see what we have:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">With UV (If you've done Dependency Management)</label><label for="__tabbed_1_2">With pip + venv (Basic Setup)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>If you've completed the <a href="../dependency_management/">Dependency Management workshop</a>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Activate your UV environment</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># Install documentation dependencies with UV</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>uv<span class="w"> </span>sync<span class="w"> </span>--group<span class="w"> </span>docs
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># Start the development server</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>mkdocs<span class="w"> </span>serve
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>Using the basic repository setup with requirements.txt:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Create and activate virtual environment (if not already done)</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># Install documentation dependencies from requirements.txt</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="c1"># Start the development server</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>mkdocs<span class="w"> </span>serve
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Visit <code>http://127.0.0.1:8000</code> to see the documentation site running locally.</p>
+<div class="admonition info">
+<p class="admonition-title">Using GitHub Codespaces?</p>
+<p>If you're running this in GitHub Codespaces, the port will be automatically forwarded. Look for a popup notification or check the <strong>Ports</strong> tab at the bottom of your VS Code interface. The forwarded URL will look like <code>https://your-codespace-name-8000.preview.app.github.dev/</code></p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Port Already in Use?</p>
+<p>If port 8000 is busy, MkDocs will automatically try 8001, 8002, etc. Check the terminal output for the actual URL.</p>
+</div>
+<h2 id="task-2-creating-api-documentation-with-mkdocstrings">Task 2: Creating API Documentation with mkdocstrings</h2>
+<p>Now let's generate automatic API documentation for our Python package using mkdocstrings.</p>
+<h3 id="21-understand-mkdocstrings-configuration">2.1 Understand mkdocstrings Configuration</h3>
+<p>Our mkdocs.yml already includes mkdocstrings setup:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nt">plugins</span><span class="p">:</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mkdocstrings</span><span class="p">:</span><span class="w"> </span><span class="c1"># (1)!</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">      </span><span class="nt">handlers</span><span class="p">:</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">        </span><span class="nt">python</span><span class="p">:</span><span class="w"> </span><span class="c1"># (2)!</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">          </span><span class="nt">options</span><span class="p">:</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">            </span><span class="nt">docstring_style</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">numpy</span><span class="w"> </span><span class="c1"># (3)!</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">            </span><span class="nt">members_order</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">source</span><span class="w"> </span><span class="c1"># (4)!</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">            </span><span class="nt">show_source</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"> </span><span class="c1"># (5)!</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">            </span><span class="nt">show_bases</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"> </span><span class="c1"># (6)!</span>
+</code></pre></div>
+<ol>
+<li>The mkdocstrings plugin automatically generates API documentation from your Python docstrings</li>
+<li>Use the Python handler to process Python modules and extract documentation</li>
+<li>Parse docstrings using NumPy format - supports Parameters, Returns, Examples sections</li>
+<li>Display class members and functions in the same order they appear in source code</li>
+<li>Include links to the actual source code on GitHub for each function/class</li>
+<li>Show base classes for inheritance relationships in class documentation</li>
+</ol>
+<details class="info">
+<summary>Docstring Styles</summary>
+<p><a href="https://mkdocstrings.github.io/">mkdocstrings</a> supports multiple docstring formats:</p>
+<p><strong><a href="https://numpydoc.readthedocs.io/en/latest/format.html">NumPy</a></strong> - Structured sections with clear parameter descriptions
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Add two numbers.</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="sd">    Parameters</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="sd">    ----------</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="sd">    x : int</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="sd">        First number</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="sd">    y : int</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="sd">        Second number</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="sd">    Returns</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="sd">    -------</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="sd">    int</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="sd">        Sum of x and y</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div></p>
+<p><strong><a href="https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings">Google</a></strong> - Clean, readable format popular in modern Python
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Add two numbers.</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="sd">    Args:</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="sd">        x (int): First number</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="sd">        y (int): Second number</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="sd">    Returns:</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="sd">        int: Sum of x and y</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div></p>
+<p><strong><a href="https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html">Sphinx</a></strong> - Traditional reStructuredText format
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Add two numbers.</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="sd">    :param x: First number</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="sd">    :type x: int</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="sd">    :param y: Second number</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="sd">    :type y: int</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="sd">    :return: Sum of x and y</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="sd">    :rtype: int</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div></p>
+<p><strong><a href="https://peps.python.org/pep-0257/">PEP 257</a></strong> - Basic Python docstring conventions
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Add two numbers and return the result.&quot;&quot;&quot;</span>
+</code></pre></div></p>
+<p>mkdocstrings can automatically detect and parse mixed styles within the same project, making it flexible for teams with varying documentation preferences.</p>
+</details>
+<h3 id="22-examine-existing-python-modules">2.2 Examine Existing Python Modules</h3>
+<p>Let's look at the structure of our Python package:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># List the Python modules in our package</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>ls<span class="w"> </span>-la<span class="w"> </span>practice_level_gp_appointments/
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># Look at an example module with docstrings</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>head<span class="w"> </span>-20<span class="w"> </span>practice_level_gp_appointments/data_processing.py
+</code></pre></div>
+<h3 id="23-create-api-documentation-pages">2.3 Create API Documentation Pages</h3>
+<p>Now let's create documentation pages for each module. First, examine the current API reference structure:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># Check what&#39;s in the API reference directory</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>ls<span class="w"> </span>-la<span class="w"> </span>docs/content/api_reference/
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>cat<span class="w"> </span>docs/content/api_reference/index.md
+</code></pre></div>
+<p>Let's create individual documentation pages for each module. We'll start with the data processing module:</p>
+<ol>
+<li><strong>Create a new file</strong> called <code>data_processing.md</code> in the <code>docs/content/api_reference/</code> directory</li>
+<li><strong>Add the following content</strong>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="gh"># Data Processing Module</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>::: practice_level_gp_appointments.data_processing
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">mkdocstrings Syntax</p>
+<p>The <code>module.name</code> syntax tells mkdocstrings to automatically generate documentation for that module, including all functions, classes, and their docstrings.</p>
+</div>
+<details class="info">
+<summary>Create the Other Module Pages</summary>
+<p>Now create the remaining API documentation pages following the same pattern:</p>
+<p><strong>Create <code>analytics.md</code></strong> in <code>docs/content/api_reference/</code>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="gh"># Analytics Module</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>::: practice_level_gp_appointments.analytics
+</code></pre></div></p>
+<p><strong>Create <code>visualization.md</code></strong> in <code>docs/content/api_reference/</code>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="gh"># Visualization Module</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>::: practice_level_gp_appointments.visualization
+</code></pre></div></p>
+<p><strong>Create <code>output.md</code></strong> in <code>docs/content/api_reference/</code>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="gh"># Output Module</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>::: practice_level_gp_appointments.output
+</code></pre></div></p>
+<p><strong>Create <code>pipeline.md</code></strong> in <code>docs/content/api_reference/</code>:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="gh"># Pipeline Module</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>::: practice_level_gp_appointments.pipeline
+</code></pre></div></p>
+</details>
+<h3 id="24-update-navigation">2.4 Update Navigation</h3>
+<p>Now let's add these new pages to our navigation in mkdocs.yml:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nt">nav</span><span class="p">:</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="c1"># ... existing navigation ...</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">API Reference</span><span class="p">:</span><span class="w"> </span><span class="c1"># (1)!</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api_reference/index.md</span><span class="w"> </span><span class="c1"># (2)!</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Data Processing</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api_reference/data_processing.md</span><span class="w"> </span><span class="c1"># (3)!</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Analytics</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api_reference/analytics.md</span><span class="w"> </span><span class="c1"># (4)!</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Visualization</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api_reference/visualization.md</span><span class="w"> </span><span class="c1"># (5)!</span>
+</code></pre></div>
+<ol>
+<li>Top-level navigation item with dropdown menu for API documentation</li>
+<li>Overview page explaining the API structure and providing quick examples</li>
+<li>Dedicated page for data processing functions (loading, cleaning, transforming)</li>
+<li>Dedicated page for analytical functions (statistics, summaries, calculations)</li>
+<li>Dedicated page for visualization functions (charts, plots, dashboards)</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Edit mkdocs.yml Carefully</p>
+<p>YAML is sensitive to indentation. Make sure to maintain the same indentation level as existing items in the nav section.</p>
+</div>
+<h3 id="25-test-api-documentation">2.5 Test API Documentation</h3>
+<p>Let's see our API documentation in action:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># If mkdocs serve is still running, it should auto-reload</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="c1"># Otherwise, restart it:</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>mkdocs<span class="w"> </span>serve
+</code></pre></div>
+<p>Navigate to the API Reference section and explore the automatically generated documentation.</p>
+<div class="admonition success">
+<p class="admonition-title">What You Should See</p>
+<ul>
+<li>Function signatures with parameter types</li>
+<li>Docstring content formatted nicely</li>
+<li>Source code links</li>
+<li>Class inheritance information</li>
+</ul>
+</div>
+<h2 id="task-3-customizing-and-organizing-documentation">Task 3: Customizing and Organizing Documentation</h2>
+<p>Let's improve our documentation structure and add some custom content.</p>
+<h3 id="31-create-a-comprehensive-api-reference-index">3.1 Create a Comprehensive API Reference Index</h3>
+<p>Let's update the API reference index page to include package-level auto-documentation and a clean navigation table:</p>
+<ol>
+<li><strong>Open the file</strong> <code>docs/content/api_reference/index.md</code></li>
+<li><strong>Replace its contents</strong> with:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="gh"># API Reference</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>::: practice_level_gp_appointments
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="gu">## Module Documentation</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>| Module | Description | Key Components |
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>|--------|-------------|----------------|
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>| [<span class="nt">Data Processing</span>](<span class="na">data_processing.md</span>) | Data loading, cleaning, and transformation | DataLoadingStage, DataJoiningStage |
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>| [<span class="nt">Analytics</span>](<span class="na">analytics.md</span>) | Statistical analysis and summaries | SummarisationStage |
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>| [<span class="nt">Visualization</span>](<span class="na">visualization.md</span>) | Chart generation and plotting | Visualization functions |
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>| [<span class="nt">Output</span>](<span class="na">output.md</span>) | Data export and report generation | OutputStage |
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>| [<span class="nt">Pipeline</span>](<span class="na">pipeline.md</span>) | Pipeline orchestration and workflow | NHSPracticeAnalysisPipeline |
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Complete Documentation</p>
+<p>The <code>practice_level_gp_appointments</code> directive automatically generates comprehensive documentation from the package's docstrings, imports, and version information.</p>
+</div>
+<h3 id="32-update-navigation">3.2 Update Navigation</h3>
+<p>Now let's add all these new pages to our navigation in mkdocs.yml. You'll need to update the API Reference section:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nt">nav</span><span class="p">:</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span><span class="c1"># ... existing navigation ...</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">API Reference</span><span class="p">:</span><span class="w"> </span><span class="c1"># (1)!</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api_reference/index.md</span><span class="w"> </span><span class="c1"># (2)!</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Data Processing</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api_reference/data_processing.md</span><span class="w"> </span><span class="c1"># (3)!</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Analytics</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api_reference/analytics.md</span><span class="w"> </span><span class="c1"># (4)!</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Visualization</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api_reference/visualization.md</span><span class="w"> </span><span class="c1"># (5)!</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Output</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api_reference/output.md</span><span class="w"> </span><span class="c1"># (6)!</span>
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">Pipeline</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api_reference/pipeline.md</span><span class="w"> </span><span class="c1"># (7)!</span>
+</code></pre></div>
+<ol>
+<li>Top-level navigation item with dropdown menu for API documentation</li>
+<li>Overview page with package documentation and navigation table</li>
+<li>Dedicated page for data processing functions and classes</li>
+<li>Dedicated page for analytical functions and classes</li>
+<li>Dedicated page for visualization functions and classes</li>
+<li>Dedicated page for output and export functions</li>
+<li>Dedicated page for pipeline orchestration classes</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Edit mkdocs.yml Carefully</p>
+<p>YAML is sensitive to indentation. Make sure to maintain the same indentation level as existing items in the nav section.</p>
+</div>
+<h3 id="33-test-your-api-documentation">3.3 Test Your API Documentation</h3>
+<p>Now let's see your API documentation in action:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># If mkdocs serve is still running, it should auto-reload</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="c1"># Otherwise, restart it:</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>mkdocs<span class="w"> </span>serve
+</code></pre></div>
+<p>Visit <code>http://127.0.0.1:8000</code> and navigate to the API Reference section.</p>
+<div class="admonition info">
+<p class="admonition-title">Using GitHub Codespaces?</p>
+<p>If you're running this in GitHub Codespaces, use the forwarded URL from the <strong>Ports</strong> tab instead of localhost. It will look like <code>https://your-codespace-name-8000.preview.app.github.dev/</code></p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">What You Should See</p>
+<p><strong>On the API Reference index page:</strong>
+- Package description and version from the <code>__init__.py</code> file
+- All available classes and functions imported at package level
+- Clean navigation table with links to each module</p>
+<p><strong>On individual module pages:</strong>
+- Function signatures with parameter types
+- Docstring content formatted nicely with sections
+- Source code links (if configured)
+- Class inheritance information</p>
+<p><strong>Overall navigation:</strong>
+- API Reference dropdown in the main navigation
+- Each module accessible from the dropdown menu</p>
+</div>
+<h2 id="task-4-deploying-to-github-pages">Task 4: Deploying to GitHub Pages</h2>
+<p>Now let's set up your documentation to be deployed to GitHub Pages using the manual method.</p>
+<h3 id="41-understanding-github-pages-setup">4.1 Understanding GitHub Pages Setup</h3>
+<p>GitHub Pages can serve your documentation directly from your repository. In this workshop, we'll use the <strong>manual deployment</strong> method where you build locally and push to a <code>gh-pages</code> branch.</p>
+<div class="admonition info">
+<p class="admonition-title">GitHub Pages</p>
+<p><a href="https://pages.github.com/">GitHub Pages</a> is a free static site hosting service that integrates with GitHub repositories. Perfect for project documentation!</p>
+</div>
+<details class="tip">
+<summary>Automatic Deployment with GitHub Actions</summary>
+<p>You can also set up automatic deployment using GitHub Actions, which builds and deploys your documentation automatically when you push changes. This is covered in detail in the <a href="../github_actions/">CI/CD with GitHub Actions</a> workshop.</p>
+<p>The automated approach uses workflows that run on GitHub's servers, eliminating the need to build locally and ensuring documentation stays up-to-date with every code change.</p>
+</details>
+<h3 id="42-fork-the-repository-for-participants">4.2 Fork the Repository (For Participants)</h3>
+<div class="admonition info">
+<p class="admonition-title">Already Working on This Repository?</p>
+<p>If you're following this workshop as part of the complete package-your-code workshop series, you're likely already working on your own fork. You can skip the forking step and continue with the repository you've been using.</p>
+</div>
+<p>If you're following this workshop independently and need your own copy:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># Fork the repository on GitHub first, then clone your fork</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/YOUR-USERNAME/package-your-code-workshop.git
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="nb">cd</span><span class="w"> </span>package-your-code-workshop
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="c1"># Make sure you&#39;re on the main branch</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>git<span class="w"> </span>checkout<span class="w"> </span>main
+</code></pre></div>
+<h3 id="43-enable-github-pages">4.3 Enable GitHub Pages</h3>
+<ol>
+<li>Go to your repository on GitHub</li>
+<li>Click <strong>Settings</strong> tab</li>
+<li>Scroll down to <strong>Pages</strong> section</li>
+<li>Under <strong>Source</strong>, select <strong>Deploy from a branch</strong></li>
+<li>Choose <strong>gh-pages</strong> branch and <strong>/ (root)</strong> folder</li>
+<li>Click <strong>Save</strong></li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">No gh-pages Branch Yet?</p>
+<p>Don't worry! We'll create it in the next step. GitHub Pages will show an error until we deploy for the first time.</p>
+</div>
+<h3 id="44-deploy-using-mkdocs">4.4 Deploy Using MkDocs</h3>
+<p>MkDocs has a built-in deployment command for GitHub Pages:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">With UV (If you've done Dependency Management)</label><label for="__tabbed_2_2">With pip + venv (Basic Setup)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>If you've completed the <a href="../dependency_management/">Dependency Management workshop</a>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># Build and deploy to GitHub Pages with UV</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>uv<span class="w"> </span>run<span class="w"> </span>mkdocs<span class="w"> </span>gh-deploy
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="c1"># This command:</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="c1"># 1. Runs mkdocs through UV&#39;s environment</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="c1"># 2. Builds your documentation</span>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="c1"># 3. Creates/updates the gh-pages branch</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="c1"># 4. Pushes to GitHub</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>Using the basic repository setup with requirements.txt:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1"># Build and deploy to GitHub Pages</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>mkdocs<span class="w"> </span>gh-deploy
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="c1"># This command:</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="c1"># 1. Builds your documentation</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="c1"># 2. Creates/updates the gh-pages branch</span>
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="c1"># 3. Pushes to GitHub</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<div class="admonition success">
+<p class="admonition-title">First Deployment</p>
+<p>After the first <code>mkdocs gh-deploy</code>, your site will be available at:
+<code>https://YOUR-USERNAME.github.io/package-your-code-workshop/</code></p>
+</div>
+<h3 id="45-test-your-deployment">4.5 Test Your Deployment</h3>
+<p>After deployment:</p>
+<ol>
+<li>Visit your GitHub Pages URL</li>
+<li>Test all navigation links</li>
+<li>Verify API documentation displays correctly</li>
+<li>Check that images and styling work</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Updates</p>
+<p>To update your documentation, simply run <code>mkdocs gh-deploy</code> again after making changes to your documentation files.</p>
+</div>
+<h2 id="checkpoint">Checkpoint</h2>
+<p>Before moving to the next workshop, verify you can:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Understand mkdocs.yml configuration structure</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Run <code>mkdocs serve</code> to preview documentation locally</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Create API documentation pages using mkdocstrings</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Add new pages to the navigation structure</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Deploy documentation to GitHub Pages using <code>mkdocs gh-deploy</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Access your documentation at your GitHub Pages URL</li>
+</ul>
+<h2 id="next-steps">Next Steps</h2>
+<p>Excellent work! You've created professional documentation that meets RAP standards.</p>
+<p><strong>Continue your learning journey</strong> - these workshops can be done in any order:</p>
+<ul>
+<li><a href="../dependency_management/"><strong>Dependency Management</strong></a> - Modern Python dependency management</li>
+<li><a href="../packaging_pyproject/"><strong>Packaging with pyproject.toml</strong></a> - Make your code installable and reusable</li>
+<li><a href="../precommit_hooks/"><strong>Pre-Commit Hooks</strong></a> - Automate code quality checks</li>
+<li><a href="../github_actions/"><strong>CI/CD with GitHub Actions</strong></a> - Automate testing and deployment</li>
+</ul>
+<h2 id="additional-resources">Additional Resources</h2>
+<h3 id="mkdocs-and-material-theme">MkDocs and Material Theme</h3>
+<ul>
+<li><a href="https://www.mkdocs.org/">MkDocs Documentation</a> - Official MkDocs guide</li>
+<li><a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a> - Complete Material theme documentation</li>
+<li><a href="https://www.mkdocs.org/user-guide/configuration/">MkDocs Configuration</a> - mkdocs.yml reference</li>
+<li><a href="https://squidfunk.github.io/mkdocs-material/getting-started/">Material Theme Setup</a> - Getting started with Material</li>
+</ul>
+<h3 id="api-documentation">API Documentation</h3>
+<ul>
+<li><a href="https://mkdocstrings.github.io/">mkdocstrings Documentation</a> - Automatic API documentation</li>
+<li><a href="https://mkdocstrings.github.io/python/">mkdocstrings Python Handler</a> - Python-specific configuration</li>
+<li><a href="https://numpydoc.readthedocs.io/en/latest/format.html">NumPy Docstring Guide</a> - Docstring formatting standards</li>
+<li><a href="https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings">Google Style Docstrings</a> - Alternative docstring format</li>
+</ul>
+<h3 id="github-pages-and-deployment">GitHub Pages and Deployment</h3>
+<ul>
+<li><a href="https://docs.github.com/en/pages">GitHub Pages Documentation</a> - Official GitHub Pages guide</li>
+<li><a href="https://www.mkdocs.org/user-guide/deploying-your-docs/">MkDocs Deployment</a> - Deployment options and strategies</li>
+<li><a href="https://github.com/marketplace/actions/deploy-mkdocs">GitHub Actions for MkDocs</a> - Automated deployment options</li>
+</ul>
+<h3 id="rap-documentation-standards">RAP Documentation Standards</h3>
+<ul>
+<li><a href="https://nhsdigital.github.io/rap-community-of-practice/introduction_to_RAP/levels_of_RAP/#silver-rap-implementing-best-practice">RAP Documentation Requirements</a> - Silver RAP documentation standards</li>
+<li><a href="https://service-manual.nhs.uk/content">NHS Digital Documentation Style</a> - NHS content and style guidelines</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <head>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+</head>
+
+<!-- Code for the next arrow from Material for MkDocs -->
+<footer class="md-footer">
+   
+  <nav
+    class="md-footer__inner md-grid"
+    aria-label="footer.title"
+    
+  >
+     
+    <a
+      href="../packaging_pyproject/"
+      class="md-footer__link md-footer__link--prev"
+      aria-label="Previous: Packaging with pyproject.toml"
+      rel="prev"
+    >
+      <div class="md-footer__button md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </div>
+      <div class="md-footer__title">
+        <div class="md-ellipsis">
+          <span class="md-footer__direction"> Previous </span>
+          Packaging with pyproject.toml
+        </div>
+      </div>
+    </a>
+      
+    <a
+      href="../cookiecutter_templates/"
+      class="md-footer__link md-footer__link--next"
+      aria-label="Next: Cookiecutter Templates"
+      rel="next"
+    >
+      <div class="md-footer__title">
+        <div class="md-ellipsis">
+          <span class="md-footer__direction"> Next </span>
+          Cookiecutter Templates
+        </div>
+      </div>
+      <div class="md-footer__button md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+      </div>
+    </a>
+    
+  </nav>
+  
+</footer>
+
+<footer class="footer">
+  <div class="footer_left">
+    <a href="mailto:datascience@nhs.net">Contact Us</a>
+    <p>Developed by <a href="https://www.england.nhs.uk/">NHS England</a> Direct Commissioning and the Data Science Profession</p>
+    <p>
+      View the Data Science team on
+      <a href="https://github.com/nhsengland/datascience"
+        >GitHub</a
+      >
+    </p>
+  </div>
+
+  <div class="legal">
+    <div class="footer_left">
+    <p>&copy; 2025 Crown Copyright (NHS England)</p>
+    <p>All content is available under the
+        <a
+          href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+          >Open Government Licence v3.0</a
+        >, except where otherwise stated.
+      </p>    
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["search.share", "content.code.annotate", "content.tabs.link", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.path", "navigation.top", "toc.integrate"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>
+      
+        <script src="../../javascripts/mermaid.mjs" type="module"></script>
+      
+    
+  </body>
+</html>
