@@ -10,3 +10,7 @@ numpy>=1.25.0
 matplotlib>=3.7.0
 seaborn>=0.12.0
 plotly>=5.15.0
+
+# NHS packages for pipeline
+git+https://github.com/nhsengland/oops-its-a-pipeline.git
+git+https://github.com/nhsengland/nhs_herbot.git
