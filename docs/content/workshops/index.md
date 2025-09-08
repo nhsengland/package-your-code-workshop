@@ -1,6 +1,6 @@
 # Workshop Overview
 
-Welcome to the hands-on workshops! Each workshop builds on the previous one, taking you through the complete journey of packaging your Python code professionally.
+Lets dive into these workshops! Each workshop will take
 
 !!! info "Learning Objectives"
 
@@ -18,44 +18,52 @@ Welcome to the hands-on workshops! Each workshop builds on the previous one, tak
 
 Complete these workshops in order during the live session:
 
-1. **[Dependency Management](dependency_management.md)**
-    - Master modern Python package management with `uv`
-    - Organize dependencies by purpose (production, development, docs)
-    - Create reproducible environments
+#### **[Dependency Management](dependency_management.md)**
 
-2. **[Packaging with pyproject.toml](packaging_pyproject.md)**
-    - Configure project metadata and dependencies
-    - Make your code installable and reusable
-    - Follow modern Python packaging standards
+* Master modern Python package management with `uv`
+* Organize dependencies by purpose (production, development, docs)
+* Create reproducible environments
 
-3. **[Documentation with MkDocs](mkdocs_documentation.md)**
-    - Create professional documentation websites
-    - Automatically generate API documentation
-    - Deploy documentation to GitHub Pages
+#### **[Packaging with pyproject.toml](packaging_pyproject.md)**
+
+* Configure project metadata and dependencies
+* Make your code installable and reusable
+* Follow modern Python packaging standards
+
+#### **[Documentation with MkDocs](mkdocs_documentation.md)**
+
+* Create professional documentation websites
+* Automatically generate API documentation
+* Deploy documentation to GitHub Pages
 
 ### Bonus Workshops (Self-Paced)
 
 Explore these advanced topics at your own pace:
 
-1. **[Cookiecutter Templates](cookiecutter_templates.md)**
-    - Create reusable project templates
-    - Standardize team workflows
-    - Rapid project scaffolding
+#### **[Cookiecutter Templates](cookiecutter_templates.md)**
 
-2. **[Pre-Commit Hooks](precommit_hooks.md)**
-    - Automate code quality checks
-    - Prevent common mistakes
-    - Enforce coding standards
+* Create reusable project templates
+* Standardize team workflows
+* Rapid project scaffolding
 
-3. **[CI/CD with GitHub Actions](github_actions.md)**
-    - Automate testing and deployment
-    - Build and publish packages
-    - Continuous integration best practices
+#### **[Pre-Commit Hooks](precommit_hooks.md)**
 
-## Getting Help
+* Automate code quality checks
+* Prevent common mistakes
+* Enforce coding standards
 
-During the workshops:
+#### **[CI/CD with GitHub Actions](github_actions.md)**
 
-- **Ask questions** - Don't hesitate to ask for clarification
-- 💭 **Discussion time** - Share your experiences and learn from others
-- 🐛 **Stuck on something?** - The facilitators are here to help
+* Automate testing and deployment
+* Build and publish packages
+* Continuous integration best practices
+
+!!! question "Getting Help"
+
+    During the workshops:
+
+    * **Ask questions** - Don't hesitate to ask for clarification
+    * **Discussion time** - Share your experiences and learn from others
+    * **Stuck on something?** - The facilitators are here to help
+  
+    Outside of the workshops, don't hesitate to [open an issue](https://github.com/nhsengland/package-your-code-workshop/issues/new) in the repository if you encounter any problems or have suggestions for improvement.
