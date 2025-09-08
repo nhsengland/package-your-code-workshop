@@ -231,7 +231,7 @@ data/lookup/
 !data/processed/.gitkeep
 !data/lookup/.gitkeep
 
-# Ignore all generated figures
+# Ignore all generated figures (including date-specific folders)
 figures/
 !figures/.gitkeep
 figures/*.svg

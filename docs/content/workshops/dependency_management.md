@@ -36,7 +36,7 @@ While this works, it has several limitations:
 ❌ **Slow dependency resolution** - pip can be very slow with complex dependencies
 ❌ **Unreliable resolution** - pip doesn't always find the best solution
 ❌ **No lockfiles by default** - hard to ensure reproducible installs
-❌ **Manual dependency organisation** - easy to mix up production vs development deps
+❌ **Manual dependency organization** - easy to mix up production vs development deps
 ❌ **Version conflicts** - difficult to detect and resolve
 
 ## Part 2: Introducing UV
