@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 """
-NHS Practice Level Data Processing Module
-=========================================
-
 This module handles data extraction, loading, and joining operations for NHS
 practice level appointment data according to NHS data standards and best
 practices.

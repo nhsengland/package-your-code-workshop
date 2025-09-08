@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 """
-NHS Practice Level Output Module
-================================
-
 This module handles saving outputs including CSV files, figures, and reports.
 
 Classes

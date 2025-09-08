@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 """
-NHS Practice Level Analytics Module
-===================================
-
 This module calculates NHS performance metrics and creates comprehensive
 summary statistics for practice level appointment data analysis.
 

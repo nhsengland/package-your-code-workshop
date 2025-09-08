@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 """
-NHS Practice Level Crosstabs Analysis Pipeline
-==============================================
-
 This module implements the main pipeline orchestration for NHS practice level
 appointment data analysis using the oops-its-a-pipeline framework.
 

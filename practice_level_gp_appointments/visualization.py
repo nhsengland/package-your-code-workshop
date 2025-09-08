@@ -1,7 +1,4 @@
 """
-NHS Practice Level Visualization Module
-=======================================
-
 This module creates graphs and visualizations for NHS practice level
 appointment data analysis.
 

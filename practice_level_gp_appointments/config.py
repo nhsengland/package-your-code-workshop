@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 """
-NHS Practice Level Crosstabs Pipeline Configuration
-===================================================
-
 Simple configuration for NHS practice level appointment data analysis pipeline.
 
 Classes
