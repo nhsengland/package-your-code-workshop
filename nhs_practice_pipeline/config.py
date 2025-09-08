@@ -47,8 +47,10 @@ class NHSPracticeAnalysisConfig(PipelineConfig):
     ----------
     data_dir : str, default='data'
         Root directory for all data files and outputs.
+    compressed_data_dir : str, default='data/compressed'
+        Directory containing compressed data archives (zip files).
     raw_data_dir : str, default='data/raw'
-        Directory containing source CSV files with practice level crosstabs.
+        Directory for extracted CSV files with practice level crosstabs.
     processed_data_dir : str, default='data/processed'
         Directory for saving processed datasets and analysis outputs.
     lookup_data_dir : str, default='data/lookup'
@@ -57,8 +59,12 @@ class NHSPracticeAnalysisConfig(PipelineConfig):
         Primary output directory for analysis results and reports.
     figures_dir : str, default='figures'
         Directory for saving visualization outputs and charts.
-    analysis_months : list, default=['may_2025', 'jun_2025', 'jul_2025']
-        List of month identifiers for temporal analysis scope.
+    auto_extract_compressed : bool, default=True
+        Whether to automatically extract compressed files before processing.
+    compressed_file_pattern : str, default='*.zip'
+        Glob pattern for finding compressed files to extract.
+    csv_file_pattern : str, default='Practice_Level_Crosstab_*.csv'
+        Glob pattern for finding CSV files to process.
     sample_size : int, default=10000
         Maximum number of rows to process from each source file for analysis.
     target_metrics : list
@@ -79,21 +85,30 @@ class NHSPracticeAnalysisConfig(PipelineConfig):
     complete dataset processing. The default sample size enables rapid
     development and testing while maintaining analytical validity.
 
+    The pipeline automatically discovers and extracts compressed data files,
+    dynamically identifying available datasets rather than using hardcoded
+    file lists for improved flexibility and maintainability.
+
     Examples
     --------
     >>> config = NHSPracticeAnalysisConfig()
     >>> config.sample_size = None  # Process complete datasets
-    >>> config.analysis_months.append('aug_2025')  # Add additional month
+    >>> config.csv_file_pattern = "*.csv"  # Change file pattern
     """
 
     data_dir: str = "data"
+    compressed_data_dir: str = "data/compressed"
     raw_data_dir: str = "data/raw"
     processed_data_dir: str = "data/processed"
     lookup_data_dir: str = "data/lookup"
     output_dir: str = "data/processed"
     figures_dir: str = "figures"
 
-    analysis_months: list = ["may_2025", "jun_2025", "jul_2025"]
+    # Dynamic file discovery settings
+    auto_extract_compressed: bool = True
+    compressed_file_pattern: str = "*.zip"
+    csv_file_pattern: str = "Practice_Level_Crosstab_*.csv"
+
     sample_size: int = 10000
 
     target_metrics: list = [

@@ -1,0 +1,3 @@
+This directory contains extracted CSV files from data/compressed/
+The CSV files are ignored by .gitignore due to their large size
+but this .gitkeep file preserves the directory structure

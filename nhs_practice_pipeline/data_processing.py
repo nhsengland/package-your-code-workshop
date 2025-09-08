@@ -31,6 +31,8 @@ Examples
 """
 
 from pathlib import Path
+import zipfile
+import glob
 import pandas as pd
 import nhs_herbot
 from loguru import logger
@@ -93,6 +95,84 @@ class DataLoadingStage(PipelineStage):
         super().__init__(outputs="raw_data", name="data_loading")
         self.config = config
 
+    def _extract_compressed_files(self):
+        """
+        Extract compressed data files to raw data directory.
+
+        This method searches for compressed files (zip archives) in the
+        compressed data directory and extracts them to the raw data directory
+        if they haven't been extracted already.
+
+        Returns
+        -------
+        list
+            List of extracted file paths.
+
+        Notes
+        -----
+        Only extracts files if auto_extract_compressed is True in config.
+        Checks if files already exist to avoid unnecessary re-extraction.
+        """
+        if not self.config.auto_extract_compressed:
+            return []
+
+        compressed_dir = Path(self.config.compressed_data_dir)
+        raw_dir = Path(self.config.raw_data_dir)
+        raw_dir.mkdir(exist_ok=True)
+
+        extracted_files = []
+
+        # Find all zip files in compressed directory
+        zip_files = list(compressed_dir.glob(self.config.compressed_file_pattern))
+        
+        for zip_path in zip_files:
+            logger.info(f"Found compressed file: {zip_path}")
+            
+            # Extract if not already done
+            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+                for member in zip_ref.namelist():
+                    if member.endswith('.csv'):
+                        extracted_path = raw_dir / member
+                        if not extracted_path.exists():
+                            logger.info(f"Extracting {member} to {extracted_path}")
+                            zip_ref.extract(member, raw_dir)
+                            extracted_files.append(extracted_path)
+                        else:
+                            logger.info(f"File already exists: {extracted_path}")
+                            extracted_files.append(extracted_path)
+
+        return extracted_files
+
+    def _discover_csv_files(self):
+        """
+        Dynamically discover CSV files in the raw data directory.
+
+        Returns
+        -------
+        dict
+            Dictionary mapping dataset names to file paths.
+
+        Notes
+        -----
+        Uses the csv_file_pattern from config to find relevant CSV files.
+        Automatically generates dataset names from filenames.
+        """
+        raw_dir = Path(self.config.raw_data_dir)
+        csv_files = {}
+
+        # Use glob to find CSV files matching the pattern
+        pattern = str(raw_dir / self.config.csv_file_pattern)
+        matching_files = glob.glob(pattern)
+
+        for file_path in matching_files:
+            path_obj = Path(file_path)
+            # Generate dataset name from filename (remove extension)
+            dataset_name = path_obj.stem
+            csv_files[dataset_name] = path_obj
+            logger.info(f"Discovered dataset: {dataset_name} -> {path_obj}")
+
+        return csv_files
+
     def run(self, context):
         """
         Load NHS practice level crosstab data from CSV files.
@@ -119,22 +199,21 @@ class DataLoadingStage(PipelineStage):
         """
         logger.info("Loading NHS practice level crosstab data...")
 
-        raw_dir = Path(self.config.raw_data_dir)
-        csv_files = {
-            "Practice_Level_Crosstab_May_25": (
-                raw_dir / "Practice_Level_Crosstab_May_25.csv"
-            ),
-            "Practice_Level_Crosstab_Jun_25": (
-                raw_dir / "Practice_Level_Crosstab_Jun_25.csv"
-            ),
-            "Practice_Level_Crosstab_Jul_25": (
-                raw_dir / "Practice_Level_Crosstab_Jul_25.csv"
-            ),
-        }
+        # Step 1: Extract compressed files if needed
+        self._extract_compressed_files()
+
+        # Step 2: Dynamically discover CSV files
+        csv_files = self._discover_csv_files()
+
+        if not csv_files:
+            logger.warning("No CSV files found matching pattern")
+            logger.info(f"Searched in: {self.config.raw_data_dir}")
+            logger.info(f"Pattern: {self.config.csv_file_pattern}")
 
         mapping_file = Path(self.config.lookup_data_dir) / "Mapping.csv"
         loaded_data = {}
 
+        # Step 3: Load discovered CSV files
         for month, file_path in csv_files.items():
             if file_path.exists():
                 logger.info(f"Loading {month} data from {file_path}")
@@ -147,13 +226,16 @@ class DataLoadingStage(PipelineStage):
                         raw_crosstab_df
                     )
                     loaded_data[month] = norm_crosstab_df
-                    logger.info(f"Loaded {len(norm_crosstab_df)} rows for {month}")
+                    logger.info(
+                        f"Loaded {len(norm_crosstab_df)} rows for {month}"
+                    )
                 except Exception as e:
                     logger.error(f"Failed to load {month} data: {e}")
                     continue
             else:
                 logger.warning(f"File not found: {file_path}")
 
+        # Step 4: Load mapping data
         if mapping_file.exists():
             logger.info(f"Loading mapping data from {mapping_file}")
             try:
