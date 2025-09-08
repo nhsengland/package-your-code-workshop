@@ -4,3 +4,6 @@
 [project]
 name = "package-your-code-workshop"
 version = "0.1.0"
+
+[tool.setuptools.packages.find]
+include = ["practice_level_gp_appointments*"]

@@ -4,6 +4,9 @@ mkdocs-material>=9.0.0
 mkdocstrings>=0.22.0
 mkdocstrings-python>=1.0.0
 
+# Development and code quality
+ruff>=0.4.0
+
 # Core project dependencies (from pyproject.toml)
 pandas>=2.1.0
 numpy>=1.25.0
