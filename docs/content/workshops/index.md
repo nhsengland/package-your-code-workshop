@@ -43,7 +43,7 @@ Explore these advanced topics at your own pace:
 #### **[Cookiecutter Templates](cookiecutter_templates.md)**
 
 * Create reusable project templates
-* Standardize team workflows
+* Standardise team workflows
 * Rapid project scaffolding
 
 #### **[Pre-Commit Hooks](precommit_hooks.md)**
