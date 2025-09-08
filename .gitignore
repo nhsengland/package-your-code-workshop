@@ -217,13 +217,14 @@ __marimo__/
 
 # NHS Pipeline Data - Ignore outputs but keep inputs
 # Keep input data (compressed archives and lookups)
+# Keep structure but ignore data
 !data/compressed/
 !data/compressed/**
 !data/lookup/
-!data/lookup/**
+!data/lookup/.gitkeep
 !data/ABOUT_DATA.md
 
-# Ignore extracted/unzipped raw data files (too large for git)
+# Ignore extracted raw data files
 data/raw/*.csv
 data/raw/*.txt
 data/raw/*.json
@@ -238,6 +239,13 @@ data/processed/*.json
 data/processed/*.xlsx
 data/processed/*.parquet
 !data/processed/.gitkeep
+
+# Ignore extracted lookup files (dynamically extracted from compressed)
+data/lookup/*.csv
+data/lookup/*.txt
+data/lookup/*.json
+data/lookup/*.xlsx
+data/lookup/*.parquet
 
 # Ignore generated figures
 figures/*.png

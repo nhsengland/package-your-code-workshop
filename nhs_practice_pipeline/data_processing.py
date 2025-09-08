@@ -132,13 +132,24 @@ class DataLoadingStage(PipelineStage):
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
                 for member in zip_ref.namelist():
                     if member.endswith('.csv'):
-                        extracted_path = raw_dir / member
+                        # Determine destination directory based on file type
+                        if 'mapping' in member.lower():
+                            dest_dir = Path(self.config.lookup_data_dir)
+                            dest_dir.mkdir(parents=True, exist_ok=True)
+                            extracted_path = dest_dir / member
+                        else:
+                            extracted_path = raw_dir / member
+                            
                         if not extracted_path.exists():
                             logger.info(f"Extracting {member} to {extracted_path}")
-                            zip_ref.extract(member, raw_dir)
+                            # Extract to appropriate directory
+                            if 'mapping' in member.lower():
+                                zip_ref.extract(member, dest_dir)
+                            else:
+                                zip_ref.extract(member, raw_dir)
                             extracted_files.append(extracted_path)
                         else:
-                            logger.info(f"File already exists: {extracted_path}")
+                            logger.info(f"File exists: {extracted_path}")
                             extracted_files.append(extracted_path)
 
         return extracted_files
@@ -243,7 +254,9 @@ class DataLoadingStage(PipelineStage):
                     dataset_name="Mapping",
                     filepath_or_buffer=mapping_file,
                 )
-                norm_mapping_df = nhs_herbot.normalise_column_names(raw_mapping_df)
+                norm_mapping_df = nhs_herbot.normalise_column_names(
+                    raw_mapping_df
+                )
                 loaded_data["mapping"] = norm_mapping_df
                 logger.info(f"Loaded {len(norm_mapping_df)} mapping records")
             except Exception as e:
