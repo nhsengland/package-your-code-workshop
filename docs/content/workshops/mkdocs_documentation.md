@@ -131,6 +131,9 @@ Let's run the documentation server to see what we have:
 
 Visit `http://127.0.0.1:8000` to see the documentation site running locally.
 
+!!! info "Using GitHub Codespaces?"
+    If you're running this in GitHub Codespaces, the port will be automatically forwarded. Look for a popup notification or check the **Ports** tab at the bottom of your VS Code interface. The forwarded URL will look like `https://your-codespace-name-8000.preview.app.github.dev/`
+
 !!! warning "Port Already in Use?"
     If port 8000 is busy, MkDocs will automatically try 8001, 8002, etc. Check the terminal output for the actual URL.
 
@@ -395,6 +398,9 @@ mkdocs serve
 ```
 
 Visit `http://127.0.0.1:8000` and navigate to the API Reference section.
+
+!!! info "Using GitHub Codespaces?"
+    If you're running this in GitHub Codespaces, use the forwarded URL from the **Ports** tab instead of localhost. It will look like `https://your-codespace-name-8000.preview.app.github.dev/`
 
 !!! success "What You Should See"
     
