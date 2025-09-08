@@ -6,15 +6,15 @@ This repository contains materials for the "Package Your Code" workshop held at 
 
 In the live section of this workshop, we will cover the following topics:
 
-1. **Dependency Management**: Learning how to manage project dependencies using tools like `uv` and splitting dependencies into production, development, and documentation categories.
-2. **Packaging with `pyproject.toml`**: Understanding the structure and purpose of `pyproject.toml` files, and how to use them to define project metadata and dependencies so you can reuse your code in other projects.
-3. **Mkdocs and Mkdocstrings**: Setting up documentation for your project using `mkdocs` and `mkdocstrings` to create user-friendly and maintainable documentation.
+* **Dependency Management**: Learning how to manage project dependencies using tools like `uv` and splitting dependencies into production, development, and documentation categories.
+* **Packaging with `pyproject.toml`**: Understanding the structure and purpose of `pyproject.toml` files, and how to use them to define project metadata and dependencies so you can reuse your code in other projects.
+* **Mkdocs and Mkdocstrings**: Setting up documentation for your project using `mkdocs` and `mkdocstrings` to create user-friendly and maintainable documentation.
 
 There is also bonus content available in the repository, which can be explored at your own pace, including:
 
-1. **Cookiecutter Templates**: Using cookiecutter templates to quickly scaffold new projects with best practices in mind.
-2. **Setting up Pre-Commit Hooks**: Implementing pre-commit hooks to automate code quality checks, enforcing coding standards, and preventing secrets from being committed to version control.
-3. **Setting up CI/CD with GitHub Actions**: Automating testing, building, and deploying your code using GitHub Actions for continuous integration and continuous deployment.
+* **Cookiecutter Templates**: Using cookiecutter templates to quickly scaffold new projects with best practices in mind.
+* **Setting up Pre-Commit Hooks**: Implementing pre-commit hooks to automate code quality checks, enforcing coding standards, and preventing secrets from being committed to version control.
+* **Setting up CI/CD with GitHub Actions**: Automating testing, building, and deploying your code using GitHub Actions for continuous integration and continuous deployment.
 
 ## Pre-requisite Knowledge
 
