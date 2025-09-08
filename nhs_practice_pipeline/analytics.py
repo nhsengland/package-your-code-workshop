@@ -57,7 +57,7 @@ class SummarisationStage(PipelineStage):
     Attributes
     ----------
     config : NHSPracticeAnalysisConfig
-        The configuration object passed during initialization.
+        The configuration object passed during initialisation.
 
     Methods
     -------

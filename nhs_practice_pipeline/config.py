@@ -18,7 +18,7 @@ NHSPracticeAnalysisConfig
 
 Notes
 -----
-Configuration parameters are organized into logical groups:
+Configuration parameters are organised into logical groups:
 - Data source paths for raw, processed, and lookup data
 - Analysis parameters including time periods and sample sizes
 - Processing options for data quality and performance control

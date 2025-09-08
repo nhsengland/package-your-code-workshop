@@ -3,7 +3,7 @@ NHS Practice Level Crosstabs Analysis Pipeline - Main Entry Point
 =================================================================
 
 This module provides the main entry point for executing the NHS practice level
-appointment data analysis pipeline. It handles initialization, execution
+appointment data analysis pipeline. It handles initialisation, execution
 coordination, and error management for the complete analytical workflow.
 
 The module can be executed directly as a script or imported and called
@@ -18,7 +18,7 @@ main()
 Notes
 -----
 The main function orchestrates the following operations:
-- Configuration initialization with NHS-specific parameters
+- Configuration initialisation with NHS-specific parameters
 - Pipeline creation and stage setup
 - Complete workflow execution with error handling
 - Result validation and success/failure reporting
@@ -71,7 +71,7 @@ def main():
     2. Create pipeline instance with all required stages
     3. Execute complete analysis workflow
     4. Handle errors and provide appropriate user feedback
-    5. Return standardized exit codes for process monitoring
+    5. Return standardised exit codes for process monitoring
 
     All stages of the pipeline are executed in sequence with validation
     and error checking at each step to ensure data quality and process

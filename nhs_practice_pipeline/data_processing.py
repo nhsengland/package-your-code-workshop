@@ -23,9 +23,9 @@ DataJoiningStage
 
 Notes
 -----
-This module uses NHS_HERBOT for standardized data loading and column
-normalization to ensure consistency with NHS data processing standards.
-All CSV files are loaded with normalized column names using snake_case
+This module uses NHS_HERBOT for standardised data loading and column
+normalisation to ensure consistency with NHS data processing standards.
+All CSV files are loaded with normalised column names using snake_case
 convention.
 
 The separation of extraction and loading stages allows for better error
@@ -125,27 +125,25 @@ class DataExtractionStage(PipelineStage):
         raw_dir.mkdir(exist_ok=True)
 
         extracted_files = []
-        zip_files = list(
-            compressed_dir.glob(self.config.compressed_file_pattern)
-        )
-        
+        zip_files = list(compressed_dir.glob(self.config.compressed_file_pattern))
+
         for zip_path in zip_files:
             logger.info(f"Found compressed file: {zip_path}")
-            
-            with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+
+            with zipfile.ZipFile(zip_path, "r") as zip_ref:
                 for member in zip_ref.namelist():
-                    if member.endswith('.csv'):
+                    if member.endswith(".csv"):
                         # Determine destination directory based on file type
-                        if 'mapping' in member.lower():
+                        if "mapping" in member.lower():
                             dest_dir = Path(self.config.lookup_data_dir)
                             dest_dir.mkdir(parents=True, exist_ok=True)
                             extracted_path = dest_dir / member
                         else:
                             extracted_path = raw_dir / member
-                            
+
                         if not extracted_path.exists():
                             logger.info(f"Extracting {member}")
-                            if 'mapping' in member.lower():
+                            if "mapping" in member.lower():
                                 zip_ref.extract(member, dest_dir)
                             else:
                                 zip_ref.extract(member, raw_dir)
@@ -165,7 +163,7 @@ class DataLoadingStage(PipelineStage):
 
     This stage loads monthly crosstab CSV files and mapping data that have
     been extracted by the DataExtractionStage, using NHS_HERBOT for
-    standardized processing and column normalization.
+    standardised processing and column normalisation.
 
     Parameters
     ----------
@@ -183,7 +181,7 @@ class DataLoadingStage(PipelineStage):
     The stage loads:
     - Monthly practice level crosstab files from raw data directory
     - Practice mapping/lookup data for geographical information
-    - All data is processed through NHS_HERBOT for column normalization
+    - All data is processed through NHS_HERBOT for column normalisation
 
     Examples
     --------
@@ -203,9 +201,7 @@ class DataLoadingStage(PipelineStage):
             Configuration object containing data paths and parameters.
         """
         super().__init__(
-            inputs="extracted_files",
-            outputs="raw_data",
-            name="data_loading"
+            inputs="extracted_files", outputs="raw_data", name="data_loading"
         )
         self.config = config
 
@@ -272,9 +268,7 @@ class DataLoadingStage(PipelineStage):
                         raw_crosstab_df
                     )
                     loaded_data[month] = norm_crosstab_df
-                    logger.info(
-                        f"Loaded {len(norm_crosstab_df)} rows for {month}"
-                    )
+                    logger.info(f"Loaded {len(norm_crosstab_df)} rows for {month}")
                 except Exception as e:
                     logger.error(f"Failed to load {month} data: {e}")
                     continue
@@ -289,9 +283,7 @@ class DataLoadingStage(PipelineStage):
                     dataset_name="Mapping",
                     filepath_or_buffer=mapping_file,
                 )
-                norm_mapping_df = nhs_herbot.normalise_column_names(
-                    raw_mapping_df
-                )
+                norm_mapping_df = nhs_herbot.normalise_column_names(raw_mapping_df)
                 loaded_data["mapping"] = norm_mapping_df
                 logger.info(f"Loaded {len(norm_mapping_df)} mapping records")
             except Exception as e:
