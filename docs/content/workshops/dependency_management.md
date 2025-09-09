@@ -21,6 +21,9 @@ Let's start by setting up a traditional Python environment to understand the cur
 
 First, let's create a clean virtual environment using the standard `venv` module:
 
+!!! info inline end "Virtual Environment Basics"
+    [Virtual environments](https://docs.python.org/3/tutorial/venv.html) isolate your project dependencies from your system Python installation. The `.venv` directory contains a complete Python installation specific to your project.
+
 ```bash
 # Create a new virtual environment
 python -m venv .venv
@@ -31,9 +34,6 @@ source .venv/bin/activate
 # Verify we're in the virtual environment
 which python
 ```
-
-!!! info "Virtual Environment Basics"
-    [Virtual environments](https://docs.python.org/3/tutorial/venv.html) isolate your project dependencies from your system Python installation. The `.venv` directory contains a complete Python installation specific to your project.
 
 ### 1.2 Examine Current Dependencies
 
@@ -70,14 +70,17 @@ The traditional `pip + venv` approach works well for basic projects but has some
 - **Slower resolution**: [pip can be slow](https://peps.python.org/pep-0508/) with complex dependency trees
 - **No built-in lockfiles**: Reproducible environments require manual [`pip freeze`](https://pip.pypa.io/en/stable/cli/pip_freeze/) management
 
-!!! tip "pip + venv is Still Valid"
-    Don't worry - `pip + venv` is still a perfectly valid approach for many projects! We're building on this solid foundation, not replacing it entirely.
+!!! tip "`pip` and `venv` is still valid"
+    Don't worry - `pip` and `venv` is still a perfectly valid approach for many projects! We're building on this solid foundation, not replacing it entirely.
 
 ## Task 2: Organizing Dependencies with pyproject.toml
 
-Before we introduce UV, let's improve our dependency organization using the modern `pyproject.toml` standard.
+Before we introduce `uv`, let's improve our dependency organization using the modern `pyproject.toml` standard.
 
 ### 2.1 Understanding pyproject.toml Structure
+
+!!! info inline end "Complete pyproject.toml Guide"
+    This section focuses on **dependency management** within pyproject.toml. For comprehensive coverage of project metadata, dynamic versioning, and tool configuration, see our [**Packaging with pyproject.toml**](packaging_pyproject.md) workshop.
 
 The [`pyproject.toml`](https://peps.python.org/pep-0621/) file is the modern standard for Python project configuration. For detailed guidance on writing pyproject.toml files, see the [official writing guide](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/). Let's examine our current minimal setup:
 
@@ -91,108 +94,78 @@ cat pyproject.toml
 Let's organize our dependencies by purpose. Open `pyproject.toml` and add the following sections:
 
 ```toml
-[project]
+[project] # (1)!
 name = "package-your-code-workshop"
 version = "0.1.0"
 description = "A workshop demonstrating Python packaging best practices"
-dependencies = [
+dependencies = [ # (2)!
     "pandas>=2.1.0",
     "numpy>=1.25.0",
     "matplotlib>=3.7.0",
     "seaborn>=0.12.0",
     "plotly>=5.15.0",
-    "git+https://github.com/nhsengland/oops-its-a-pipeline.git",
-    "git+https://github.com/nhsengland/nhs_herbot.git",
+    "oops_its_a_pipeline@git+https://github.com/nhsengland/oops-its-a-pipeline.git", # (3)!
+    "nhs_herbot@git+https://github.com/nhsengland/nhs_herbot.git",
 ]
 
-[project.optional-dependencies]
-docs = [
+[dependency-groups] # (4)!
+docs = [ # (5)!
     "mkdocs>=1.5.0",
     "mkdocs-material>=9.0.0",
     "mkdocstrings>=0.22.0",
     "mkdocstrings-python>=1.0.0",
 ]
-dev = [
+dev = [ # (6)!
     "ruff>=0.4.0",
     "pytest>=7.4.0",
-    "black>=23.7.0",
-    "isort>=5.12.0",
 ]
 
-[tool.setuptools.packages.find]
+[tool.setuptools.packages.find] # (7)!
 include = ["practice_level_gp_appointments*"]
 ```
 
-??? info "Why Use Optional Dependencies?"
-    
-    **Optional dependencies** let you group related packages together and install them selectively:
-    
-    ```bash
-    pip install -e .              # Core dependencies only
-    pip install -e .[dev]         # Core + development tools
-    pip install -e .[docs]        # Core + documentation tools
-    pip install -e .[dev,docs]    # Core + dev + docs
-    ```
-
-??? info "Understanding the Different Dependency Types"
-    
-    **Core Dependencies** (`dependencies`): Required for your application to run in production
-    ```toml
-    dependencies = [
-        "pandas>=2.1.0",      # Data manipulation
-        "numpy>=1.25.0",      # Numerical computing
-        "matplotlib>=3.7.0",  # Basic plotting
-    ]
-    ```
-    
-    **Development Dependencies** (`dev` group): Tools needed during development
-    ```toml
-    [project.optional-dependencies]
-    dev = [
-        "ruff>=0.4.0",        # Linting and formatting
-        "pytest>=7.4.0",      # Testing framework
-        "black>=23.7.0",      # Code formatting
-    ]
-    ```
-    
-    **Documentation Dependencies** (`docs` group): Tools needed to build documentation
-    ```toml
-    docs = [
-        "mkdocs>=1.5.0",           # Documentation generator
-        "mkdocs-material>=9.0.0",  # Material theme
-    ]
-    ```
+1. Core project metadata section following [PEP 621](https://peps.python.org/pep-0621/)
+2. Core dependencies required for your application to run in production
+3. Git-based dependencies - packages installed directly from repositories
+4. Dependency groups for development tools following [PEP 735](https://peps.python.org/pep-0735/)
+5. Documentation generation dependencies - only needed when building docs
+6. Development tools - only needed when coding and testing
+7. Build tool configuration - tells setuptools which packages to include
 
 !!! tip "Why Separate Groups?"
     
     Now you can install exactly what you need:
     
     ```bash
-    # Install everything (current approach)
+    # Traditional approach - everything mixed together
     pip install -r requirements.txt  # ~50 packages
     
-    # Install selectively with pyproject.toml
-    pip install -e .              # Core dependencies only
-    pip install -e .[dev]         # Core + development tools
-    pip install -e .[docs]        # Core + documentation tools
-    pip install -e .[dev,docs]    # Everything
+    # Modern approach - install selectively
+    pip install -e .         # Core dependencies only
+    pip install -e .[dev]    # Core + development tools
+    pip install -e .[docs]   # Core + documentation tools
     ```
 
-??? warning "Optional Dependencies vs Dependency Groups"
+??? warning "Dependency Groups: Modern Best Practice"
     
-    We're using `optional-dependencies` because it works with pip today. There's also a newer [`dependency-groups`](https://peps.python.org/pep-0735/) approach:
+    We're using `dependency-groups` as the modern best practice for development tools:
     
     ```toml
-    # Current approach - works with pip
-    [project.optional-dependencies]
-    dev = ["pytest", "ruff"]
-    
-    # Newer approach - for modern tools like UV
+    # Modern approach - dependency groups for dev tools
     [dependency-groups]
     dev = ["pytest", "ruff"]
+    docs = ["mkdocs", "mkdocs-material"]
     ```
     
-    We'll use the newer approach when we introduce UV!
+    **Dependency groups** are specifically designed for development tools, testing, and build processes. They're supported by modern tools like UV and newer versions of pip.
+    
+    **For backwards compatibility with older pip versions**, you can still use:
+    ```toml
+    # Fallback approach - optional dependencies
+    [project.optional-dependencies]
+    dev = ["pytest", "ruff"]
+    docs = ["mkdocs", "mkdocs-material"]  
+    ```
 
 ### 2.3 Test the New Structure
 
@@ -233,11 +206,13 @@ Let's install [UV](https://docs.astral.sh/uv/) on your system:
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Restart your shell or source the new PATH
-source ~/.bashrc  # or ~/.zshrc depending on your shell
+source ~/.bashrc  # or ~/.zshrc depending on your shell # (1)!
 
 # Verify installation
 uv --version
 ```
+
+1. To check the type of shell you're using, run `echo $SHELL`. If it ends with `zsh`, use `source ~/.zshrc` instead.
 
 !!! info "Windows Installation"
     On Windows, use: `powershell -c "irm https://astral.sh/uv/install.ps1 | iex"`. For more installation options, see the [UV installation guide](https://docs.astral.sh/uv/getting-started/installation/).
@@ -266,31 +241,11 @@ uv sync --all-groups
 
 ### 3.3 Practice: Selective Installation with UV
 
-Now let's practice using UV's dependency groups in different ways. We'll convert our `pyproject.toml` to use the modern `dependency-groups` syntax first.
-
-#### Update pyproject.toml for UV
-
-Replace the `[project.optional-dependencies]` section with the modern [`dependency-groups`](https://peps.python.org/pep-0735/) approach:
-
-```toml
-[dependency-groups]
-docs = [
-    "mkdocs>=1.5.0",
-    "mkdocs-material>=9.0.0",
-    "mkdocstrings>=0.22.0",
-    "mkdocstrings-python>=1.0.0",
-]
-dev = [
-    "ruff>=0.4.0",        # Fast Python linter
-    "pytest>=7.4.0",      # Testing framework
-    "black>=23.7.0",      # Code formatter
-    "isort>=5.12.0",      # Import sorter
-]
-```
+Now let's practice using UV's dependency groups with the same `optional-dependencies` syntax.
 
 #### Practice Different Installation Patterns
 
-Let's practice installing dependencies for different use cases:
+Let's practice installing dependencies for different use cases using our existing pyproject.toml structure:
 
 ```bash
 # Start with a clean slate
@@ -369,7 +324,7 @@ source .venv/bin/activate
 uv add pandas numpy matplotlib seaborn plotly
 
 # Add development dependencies
-uv add --group dev ruff pytest black isort
+uv add --group dev ruff pytest
 
 # Add documentation dependencies  
 uv add --group docs mkdocs mkdocs-material mkdocstrings mkdocstrings-python
@@ -439,10 +394,13 @@ uv python install 3.11
 # Run commands in the UV environment
 uv run python --version
 
-# Run scripts
-uv run python practice_level_gp_appointments/__main__.py
+# Run the package as a module (uses __main__.py)
+uv run python -m practice_level_gp_appointments
 
-# Run tools
+# Run a specific script file
+uv run python practice_level_gp_appointments/pipeline.py
+
+# Run tools from your environment
 uv run ruff check .
 ```
 
@@ -488,13 +446,16 @@ Here's a quick reference for migrating from pip workflows to UV:
     dependencies = ["pandas", "requests"]
     
     [dependency-groups]
-    dev = ["pytest", "ruff", "black"]
+    dev = ["pytest", "ruff"]
     ```
     
     **Installation**:
     ```bash
-    uv sync          # Production (core only)
-    uv sync --group dev  # Development (core + dev tools)
+    # With UV (modern)
+    uv sync --group dev
+    
+    # With pip (fallback - use optional-dependencies)
+    pip install -e .[dev]
     ```
 
 ??? example "Advanced: More Granular Groups"
@@ -509,7 +470,7 @@ Here's a quick reference for migrating from pip workflows to UV:
     **Example comprehensive setup**:
     ```toml
     [dependency-groups]
-    dev = ["ruff", "black", "isort"]
+    dev = ["ruff", "pytest"]
     test = ["pytest", "pytest-cov"]
     docs = ["mkdocs", "mkdocs-material"]
     typing = ["mypy", "types-requests"]
@@ -525,7 +486,7 @@ Here's a quick reference for migrating from pip workflows to UV:
     # Production deployment
     uv sync
     
-    # Development work
+    # Development work  
     uv sync --group dev
     ```
     
@@ -631,33 +592,33 @@ Excellent work! You've successfully modernized your dependency management workfl
 - [**Pre-Commit Hooks**](precommit_hooks.md) - Automate code quality checks
 - [**CI/CD with GitHub Actions**](github_actions.md) - Automate testing and deployment
 
-## Additional Resources
+??? info "Additional Resources"
 
-### RAP Community of Practice
+    ### RAP Community of Practice
 
-- [Why Use Virtual Environments](https://nhsdigital.github.io/rap-community-of-practice/training_resources/python/virtual-environments/why-use-virtual-environments/) - RAP guidance on virtual environments for reproducible analysis
+    - [Why Use Virtual Environments](https://nhsdigital.github.io/rap-community-of-practice/training_resources/python/virtual-environments/why-use-virtual-environments/) - RAP guidance on virtual environments for reproducible analysis
 
-### UV (Modern Python Package Manager)
+    ### UV (Modern Python Package Manager)
 
-- [UV Documentation](https://docs.astral.sh/uv/) - Complete UV guide and reference
-- [UV Working on Projects](https://docs.astral.sh/uv/guides/projects/#working-on-projects) - Practical UV project workflows
-- [UV Migration Guide](https://docs.astral.sh/uv/guides/migration/pip-to-project/#migrating-from-pip-to-a-uv-project) - Step-by-step pip to UV migration
-- [UV vs pip Comparison](https://docs.astral.sh/uv/pip/) - Detailed comparison of tools
+    - [UV Documentation](https://docs.astral.sh/uv/) - Complete UV guide and reference
+    - [UV Working on Projects](https://docs.astral.sh/uv/guides/projects/#working-on-projects) - Practical UV project workflows
+    - [UV Migration Guide](https://docs.astral.sh/uv/guides/migration/pip-to-project/#migrating-from-pip-to-a-uv-project) - Step-by-step pip to UV migration
+    - [UV vs pip Comparison](https://docs.astral.sh/uv/pip/) - Detailed comparison of tools
 
-### Python Project Configuration
+    ### Python Project Configuration
 
-- [Writing pyproject.toml](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/) - Official guide to pyproject.toml
-- [PEP 621 - Project Metadata](https://peps.python.org/pep-0621/) - Standard for pyproject.toml
-- [PEP 735 - Dependency Groups](https://peps.python.org/pep-0735/) - Modern dependency organization
+    - [Writing pyproject.toml](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/) - Official guide to pyproject.toml
+    - [PEP 621 - Project Metadata](https://peps.python.org/pep-0621/) - Standard for pyproject.toml
+    - [PEP 735 - Dependency Groups](https://peps.python.org/pep-0735/) - Modern dependency organization
 
-### Traditional Python Packaging
+    ### Traditional Python Packaging
 
-- [Python Packaging Guide](https://packaging.python.org/) - Official Python packaging documentation
-- [Virtual Environments Guide](https://docs.python.org/3/tutorial/venv.html) - Python.org official guide
-- [pip User Guide](https://pip.pypa.io/en/stable/user_guide/) - Official pip documentation
+    - [Python Packaging Guide](https://packaging.python.org/) - Official Python packaging documentation
+    - [Virtual Environments Guide](https://docs.python.org/3/tutorial/venv.html) - Python.org official guide
+    - [pip User Guide](https://pip.pypa.io/en/stable/user_guide/) - Official pip documentation
 
-### Best Practices & Standards
+    ### Best Practices & Standards
 
-- [Python Packaging Best Practices](https://packaging.python.org/en/latest/guides/) - Official packaging guidelines
-- [Understanding Semantic Versioning](https://semver.org/) - Version specification standards
-- [Python Enhancement Proposals (PEPs)](https://peps.python.org/) - Python standards and proposals
+    - [Python Packaging Best Practices](https://packaging.python.org/en/latest/guides/) - Official packaging guidelines
+    - [Understanding Semantic Versioning](https://semver.org/) - Version specification standards
+    - [Python Enhancement Proposals (PEPs)](https://peps.python.org/) - Python standards and proposals
