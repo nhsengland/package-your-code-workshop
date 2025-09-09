@@ -30,7 +30,7 @@ The workshop assumes that participants have a basic understanding of the followi
 
 ## Workshop Website
 
-The workshop materials are hosted on a dedicated website built with MkDocs: [Package Your Code Workshop](https://nhsdigital.github.io/package-your-code-workshop/). On the website, you will find information about the workshop, how to get started, and the workshop content itself.
+The workshop materials are hosted on a dedicated website built with MkDocs: [Package Your Code Workshop](https://nhsengland.github.io/package-your-code-workshop/). On the website, you will find information about the workshop, how to get started, and the workshop content itself.
 
 ## Have an issue?
 
