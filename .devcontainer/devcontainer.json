@@ -26,7 +26,7 @@
     }
   },
   // "postCreateCommand": "pip install -r requirements.txt && pip install -e .",
-  "postCreateCommand": "pip install -r requirements.txt",
+  "postCreateCommand": "pip install --upgrade pip && pip install -r requirements.txt",
   "forwardPorts": [8000],
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {}
