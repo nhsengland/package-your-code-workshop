@@ -421,37 +421,21 @@ Visit `http://127.0.0.1:8000` and navigate to the API Reference section.
 
 ## Task 4: Deploying to GitHub Pages
 
-Now let's set up your documentation to be deployed to GitHub Pages using the manual method.
+Now let's set up your documentation to be deployed to GitHub Pages using the manual method. [GitHub Pages](https://pages.github.com/) is a free static site hosting service can serve your documentation directly from your repository. In this workshop, we'll use the **manual deployment** method where you build locally and push to a `gh-pages` branch.
 
-### 4.1 Understanding GitHub Pages Setup
+!!! warning "Make sure you are on a forked repository!"
 
-GitHub Pages can serve your documentation directly from your repository. In this workshop, we'll use the **manual deployment** method where you build locally and push to a `gh-pages` branch.
+    If you're following this workshop as part of the complete package-your-code workshop series, you're likely already working on your own fork. You can skip the forking step and continue with the repository you've been using.
 
-!!! info "GitHub Pages"
-    [GitHub Pages](https://pages.github.com/) is a free static site hosting service that integrates with GitHub repositories. Perfect for project documentation!
+    Find out how to fork the repository in the [Getting Started](getting_started.md) guide.
 
 ??? tip "Automatic Deployment with GitHub Actions"
     You can also set up automatic deployment using GitHub Actions, which builds and deploys your documentation automatically when you push changes. This is covered in detail in the [CI/CD with GitHub Actions](github_actions.md) workshop.
 
     The automated approach uses workflows that run on GitHub's servers, eliminating the need to build locally and ensuring documentation stays up-to-date with every code change.
 
-### 4.2 Fork the Repository (For Participants)
 
-!!! info "Already Working on This Repository?"
-    If you're following this workshop as part of the complete package-your-code workshop series, you're likely already working on your own fork. You can skip the forking step and continue with the repository you've been using.
-
-If you're following this workshop independently and need your own copy:
-
-```bash
-# Fork the repository on GitHub first, then clone your fork
-git clone https://github.com/YOUR-USERNAME/package-your-code-workshop.git
-cd package-your-code-workshop
-
-# Make sure you're on the main branch
-git checkout main
-```
-
-### 4.3 Enable GitHub Pages
+### 4.1 Enable GitHub Pages
 
 1. Go to your repository on GitHub
 2. Click **Settings** tab
@@ -463,7 +447,7 @@ git checkout main
 !!! warning "No gh-pages Branch Yet?"
     Don't worry! We'll create it in the next step. GitHub Pages will show an error until we deploy for the first time.
 
-### 4.4 Deploy Using MkDocs
+### 4.2 Deploy Using MkDocs
 
 MkDocs has a built-in deployment command for GitHub Pages:
 
@@ -534,29 +518,29 @@ Excellent work! You've created professional documentation that meets RAP standar
 - [**Pre-Commit Hooks**](precommit_hooks.md) - Automate code quality checks
 - [**CI/CD with GitHub Actions**](github_actions.md) - Automate testing and deployment
 
-## Additional Resources
+??? info "Additional Resources"
 
-### MkDocs and Material Theme
+    ### MkDocs and Material Theme
 
-- [MkDocs Documentation](https://www.mkdocs.org/) - Official MkDocs guide
-- [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) - Complete Material theme documentation
-- [MkDocs Configuration](https://www.mkdocs.org/user-guide/configuration/) - mkdocs.yml reference
-- [Material Theme Setup](https://squidfunk.github.io/mkdocs-material/getting-started/) - Getting started with Material
+    - [MkDocs Documentation](https://www.mkdocs.org/) - Official MkDocs guide
+    - [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) - Complete Material theme documentation
+    - [MkDocs Configuration](https://www.mkdocs.org/user-guide/configuration/) - mkdocs.yml reference
+    - [Material Theme Setup](https://squidfunk.github.io/mkdocs-material/getting-started/) - Getting started with Material
 
-### API Documentation
+    ### API Documentation
 
-- [mkdocstrings Documentation](https://mkdocstrings.github.io/) - Automatic API documentation
-- [mkdocstrings Python Handler](https://mkdocstrings.github.io/python/) - Python-specific configuration
-- [NumPy Docstring Guide](https://numpydoc.readthedocs.io/en/latest/format.html) - Docstring formatting standards
-- [Google Style Docstrings](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings) - Alternative docstring format
+    - [mkdocstrings Documentation](https://mkdocstrings.github.io/) - Automatic API documentation
+    - [mkdocstrings Python Handler](https://mkdocstrings.github.io/python/) - Python-specific configuration
+    - [NumPy Docstring Guide](https://numpydoc.readthedocs.io/en/latest/format.html) - Docstring formatting standards
+    - [Google Style Docstrings](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings) - Alternative docstring format
 
-### GitHub Pages and Deployment
+    ### GitHub Pages and Deployment
 
-- [GitHub Pages Documentation](https://docs.github.com/en/pages) - Official GitHub Pages guide
-- [MkDocs Deployment](https://www.mkdocs.org/user-guide/deploying-your-docs/) - Deployment options and strategies
-- [GitHub Actions for MkDocs](https://github.com/marketplace/actions/deploy-mkdocs) - Automated deployment options
+    - [GitHub Pages Documentation](https://docs.github.com/en/pages) - Official GitHub Pages guide
+    - [MkDocs Deployment](https://www.mkdocs.org/user-guide/deploying-your-docs/) - Deployment options and strategies
+    - [GitHub Actions for MkDocs](https://github.com/marketplace/actions/deploy-mkdocs) - Automated deployment options
 
-### RAP Documentation Standards
+    ### RAP Documentation Standards
 
-- [RAP Documentation Requirements](https://nhsdigital.github.io/rap-community-of-practice/introduction_to_RAP/levels_of_RAP/#silver-rap-implementing-best-practice) - Silver RAP documentation standards
-- [NHS Digital Documentation Style](https://service-manual.nhs.uk/content) - NHS content and style guidelines
+    - [RAP Documentation Requirements](https://nhsdigital.github.io/rap-community-of-practice/introduction_to_RAP/levels_of_RAP/#silver-rap-implementing-best-practice) - Silver RAP documentation standards
+    - [NHS Digital Documentation Style](https://service-manual.nhs.uk/content) - NHS content and style guidelines
