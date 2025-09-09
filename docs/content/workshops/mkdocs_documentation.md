@@ -427,10 +427,10 @@ Now let's set up your documentation to be deployed to GitHub Pages using the man
 
     If you're following this workshop as part of the complete package-your-code workshop series, you're likely already working on your own fork. You can skip the forking step and continue with the repository you've been using.
 
-    Find out how to fork the repository in the [Getting Started](getting_started.md) guide.
+    Find out how to fork the repository in the [Getting Started](../getting_started.md) guide.
 
 ??? tip "Automatic Deployment with GitHub Actions"
-    You can also set up automatic deployment using GitHub Actions, which builds and deploys your documentation automatically when you push changes. This is covered in detail in the [CI/CD with GitHub Actions](github_actions.md) workshop.
+    You can also set up automatic deployment using GitHub Actions, which builds and deploys your documentation automatically when you push changes. This is covered in detail in the [CI/CD with GitHub Actions](../github_actions.md) workshop.
 
     The automated approach uses workflows that run on GitHub's servers, eliminating the need to build locally and ensuring documentation stays up-to-date with every code change.
 
