@@ -768,36 +768,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#41-understanding-github-pages-setup" class="md-nav__link">
+  <a href="#41-enable-github-pages" class="md-nav__link">
     <span class="md-ellipsis">
-      4.1 Understanding GitHub Pages Setup
+      4.1 Enable GitHub Pages
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#42-fork-the-repository-for-participants" class="md-nav__link">
+  <a href="#42-deploy-using-mkdocs" class="md-nav__link">
     <span class="md-ellipsis">
-      4.2 Fork the Repository (For Participants)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#43-enable-github-pages" class="md-nav__link">
-    <span class="md-ellipsis">
-      4.3 Enable GitHub Pages
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#44-deploy-using-mkdocs" class="md-nav__link">
-    <span class="md-ellipsis">
-      4.4 Deploy Using MkDocs
+      4.2 Deploy Using MkDocs
     </span>
   </a>
   
@@ -833,16 +815,7 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#additional-resources" class="md-nav__link">
-    <span class="md-ellipsis">
-      Additional Resources
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Additional Resources">
+    <nav class="md-nav" aria-label="Next Steps">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1474,32 +1447,18 @@
 - Each module accessible from the dropdown menu</p>
 </div>
 <h2 id="task-4-deploying-to-github-pages">Task 4: Deploying to GitHub Pages</h2>
-<p>Now let's set up your documentation to be deployed to GitHub Pages using the manual method.</p>
-<h3 id="41-understanding-github-pages-setup">4.1 Understanding GitHub Pages Setup</h3>
-<p>GitHub Pages can serve your documentation directly from your repository. In this workshop, we'll use the <strong>manual deployment</strong> method where you build locally and push to a <code>gh-pages</code> branch.</p>
-<div class="admonition info">
-<p class="admonition-title">GitHub Pages</p>
-<p><a href="https://pages.github.com/">GitHub Pages</a> is a free static site hosting service that integrates with GitHub repositories. Perfect for project documentation!</p>
+<p>Now let's set up your documentation to be deployed to GitHub Pages using the manual method. <a href="https://pages.github.com/">GitHub Pages</a> is a free static site hosting service can serve your documentation directly from your repository. In this workshop, we'll use the <strong>manual deployment</strong> method where you build locally and push to a <code>gh-pages</code> branch.</p>
+<div class="admonition warning">
+<p class="admonition-title">Make sure you are on a forked repository!</p>
+<p>If you're following this workshop as part of the complete package-your-code workshop series, you're likely already working on your own fork. You can skip the forking step and continue with the repository you've been using.</p>
+<p>Find out how to fork the repository in the <a href="getting_started.md">Getting Started</a> guide.</p>
 </div>
 <details class="tip">
 <summary>Automatic Deployment with GitHub Actions</summary>
 <p>You can also set up automatic deployment using GitHub Actions, which builds and deploys your documentation automatically when you push changes. This is covered in detail in the <a href="../github_actions/">CI/CD with GitHub Actions</a> workshop.</p>
 <p>The automated approach uses workflows that run on GitHub's servers, eliminating the need to build locally and ensuring documentation stays up-to-date with every code change.</p>
 </details>
-<h3 id="42-fork-the-repository-for-participants">4.2 Fork the Repository (For Participants)</h3>
-<div class="admonition info">
-<p class="admonition-title">Already Working on This Repository?</p>
-<p>If you're following this workshop as part of the complete package-your-code workshop series, you're likely already working on your own fork. You can skip the forking step and continue with the repository you've been using.</p>
-</div>
-<p>If you're following this workshop independently and need your own copy:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># Fork the repository on GitHub first, then clone your fork</span>
-<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/YOUR-USERNAME/package-your-code-workshop.git
-<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="nb">cd</span><span class="w"> </span>package-your-code-workshop
-<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>
-<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="c1"># Make sure you&#39;re on the main branch</span>
-<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>git<span class="w"> </span>checkout<span class="w"> </span>main
-</code></pre></div>
-<h3 id="43-enable-github-pages">4.3 Enable GitHub Pages</h3>
+<h3 id="41-enable-github-pages">4.1 Enable GitHub Pages</h3>
 <ol>
 <li>Go to your repository on GitHub</li>
 <li>Click <strong>Settings</strong> tab</li>
@@ -1512,31 +1471,31 @@
 <p class="admonition-title">No gh-pages Branch Yet?</p>
 <p>Don't worry! We'll create it in the next step. GitHub Pages will show an error until we deploy for the first time.</p>
 </div>
-<h3 id="44-deploy-using-mkdocs">4.4 Deploy Using MkDocs</h3>
+<h3 id="42-deploy-using-mkdocs">4.2 Deploy Using MkDocs</h3>
 <p>MkDocs has a built-in deployment command for GitHub Pages:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">With UV (If you've done Dependency Management)</label><label for="__tabbed_2_2">With pip + venv (Basic Setup)</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>If you've completed the <a href="../dependency_management/">Dependency Management workshop</a>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># Build and deploy to GitHub Pages with UV</span>
-<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>uv<span class="w"> </span>run<span class="w"> </span>mkdocs<span class="w"> </span>gh-deploy
-<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
-<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="c1"># This command:</span>
-<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="c1"># 1. Runs mkdocs through UV&#39;s environment</span>
-<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="c1"># 2. Builds your documentation</span>
-<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="c1"># 3. Creates/updates the gh-pages branch</span>
-<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="c1"># 4. Pushes to GitHub</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1"># Build and deploy to GitHub Pages with UV</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>uv<span class="w"> </span>run<span class="w"> </span>mkdocs<span class="w"> </span>gh-deploy
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="c1"># This command:</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="c1"># 1. Runs mkdocs through UV&#39;s environment</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="c1"># 2. Builds your documentation</span>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="c1"># 3. Creates/updates the gh-pages branch</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="c1"># 4. Pushes to GitHub</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
 <p>Using the basic repository setup with requirements.txt:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1"># Build and deploy to GitHub Pages</span>
-<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>mkdocs<span class="w"> </span>gh-deploy
-<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
-<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="c1"># This command:</span>
-<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="c1"># 1. Builds your documentation</span>
-<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="c1"># 2. Creates/updates the gh-pages branch</span>
-<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="c1"># 3. Pushes to GitHub</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1"># Build and deploy to GitHub Pages</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>mkdocs<span class="w"> </span>gh-deploy
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="c1"># This command:</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="c1"># 1. Builds your documentation</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="c1"># 2. Creates/updates the gh-pages branch</span>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="c1"># 3. Pushes to GitHub</span>
 </code></pre></div>
 </div>
 </div>
@@ -1561,12 +1520,12 @@
 <h2 id="checkpoint">Checkpoint</h2>
 <p>Before moving to the next workshop, verify you can:</p>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Understand mkdocs.yml configuration structure</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Run <code>mkdocs serve</code> to preview documentation locally</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Create API documentation pages using mkdocstrings</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Add new pages to the navigation structure</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Deploy documentation to GitHub Pages using <code>mkdocs gh-deploy</code></li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Access your documentation at your GitHub Pages URL</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox"/><span class="task-list-indicator"></span></label> Understand mkdocs.yml configuration structure</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox"/><span class="task-list-indicator"></span></label> Run <code>mkdocs serve</code> to preview documentation locally</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox"/><span class="task-list-indicator"></span></label> Create API documentation pages using mkdocstrings</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox"/><span class="task-list-indicator"></span></label> Add new pages to the navigation structure</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox"/><span class="task-list-indicator"></span></label> Deploy documentation to GitHub Pages using <code>mkdocs gh-deploy</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox"/><span class="task-list-indicator"></span></label> Access your documentation at your GitHub Pages URL</li>
 </ul>
 <h2 id="next-steps">Next Steps</h2>
 <p>Excellent work! You've created professional documentation that meets RAP standards.</p>
@@ -1577,7 +1536,8 @@
 <li><a href="../precommit_hooks/"><strong>Pre-Commit Hooks</strong></a> - Automate code quality checks</li>
 <li><a href="../github_actions/"><strong>CI/CD with GitHub Actions</strong></a> - Automate testing and deployment</li>
 </ul>
-<h2 id="additional-resources">Additional Resources</h2>
+<details class="info">
+<summary>Additional Resources</summary>
 <h3 id="mkdocs-and-material-theme">MkDocs and Material Theme</h3>
 <ul>
 <li><a href="https://www.mkdocs.org/">MkDocs Documentation</a> - Official MkDocs guide</li>
@@ -1603,6 +1563,7 @@
 <li><a href="https://nhsdigital.github.io/rap-community-of-practice/introduction_to_RAP/levels_of_RAP/#silver-rap-implementing-best-practice">RAP Documentation Requirements</a> - Silver RAP documentation standards</li>
 <li><a href="https://service-manual.nhs.uk/content">NHS Digital Documentation Style</a> - NHS content and style guidelines</li>
 </ul>
+</details>
 
 
 
@@ -1721,7 +1682,7 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["search.share", "content.code.annotate", "content.tabs.link", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.path", "navigation.top", "toc.integrate"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["search.share", "content.code.annotate", "content.code.copy", "content.tabs.link", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.path", "navigation.top", "toc.integrate"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.92b07e13.min.js"></script>

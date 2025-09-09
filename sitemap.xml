@@ -2,42 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://nhsengland.github.io/package-your-code-workshop/</loc>
-         <lastmod>2025-09-08</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://nhsengland.github.io/package-your-code-workshop/getting_started/</loc>
-         <lastmod>2025-09-08</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://nhsengland.github.io/package-your-code-workshop/api_reference/</loc>
-         <lastmod>2025-09-08</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://nhsengland.github.io/package-your-code-workshop/workshops/</loc>
-         <lastmod>2025-09-08</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://nhsengland.github.io/package-your-code-workshop/workshops/cookiecutter_templates/</loc>
-         <lastmod>2025-09-08</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://nhsengland.github.io/package-your-code-workshop/workshops/dependency_management/</loc>
-         <lastmod>2025-09-08</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://nhsengland.github.io/package-your-code-workshop/workshops/github_actions/</loc>
-         <lastmod>2025-09-08</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://nhsengland.github.io/package-your-code-workshop/workshops/mkdocs_documentation/</loc>
-         <lastmod>2025-09-08</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://nhsengland.github.io/package-your-code-workshop/workshops/packaging_pyproject/</loc>
-         <lastmod>2025-09-08</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://nhsengland.github.io/package-your-code-workshop/workshops/precommit_hooks/</loc>
-         <lastmod>2025-09-08</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
 </urlset>
