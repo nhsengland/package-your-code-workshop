@@ -28,6 +28,10 @@ The workshop assumes that participants have a basic understanding of the followi
 | RAP           | Understanding of the core principles of Reproducible Analytical Pipelines (RAP), particularly the [levels of RAP](https://nhsdigital.github.io/rap-community-of-practice/introduction_to_RAP/levels_of_RAP) |
 | Virtual Environments & Package Management | Basic understanding of virtual environments and package management in Python (e.g., `pip`, `venv`, `conda`, etc.) |
 
+## Workshop Website
+
+The workshop materials are hosted on a dedicated website built with MkDocs: [Package Your Code Workshop](https://nhsdigital.github.io/package-your-code-workshop/). On the website, you will find information about the workshop, how to get started, and the workshop content itself.
+
 ## Have an issue?
 
 If you encounter any issues or have questions, please open an issue in this repository. We welcome feedback and contributions to improve the workshop materials.
