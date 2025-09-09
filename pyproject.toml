@@ -1,6 +1,3 @@
-# This file will be built up during the workshop
-# Starting with a minimal configuration
-
 [project]
 name = "package-your-code-workshop"
 version = "0.1.0"
