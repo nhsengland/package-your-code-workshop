@@ -431,6 +431,219 @@ Let's test our complete setup:
     - **Dynamic versioning** for easier maintenance
     - **Tool configuration** for consistent code quality
 
+## Task 5: Using Your Packaged Code in Other Projects
+
+Now that we've properly configured our package, let's see how to use it in other projects - just like we use `nhs_herbot` and `oops_its_a_pipeline` in our dependencies.
+
+### 5.1 Understanding Git-Based Dependencies
+
+In our dependency management workshop, we saw examples like:
+
+```toml
+dependencies = [
+    "pandas>=2.1.0",
+    "oops_its_a_pipeline@git+https://github.com/nhsengland/oops-its-a-pipeline.git",
+    "nhs_herbot@git+https://github.com/nhsengland/nhs_herbot.git",
+]
+```
+
+These are **git-based dependencies** - packages installed directly from GitHub repositories. Now that our project is properly packaged, we can use it the same way!
+
+### 5.2 Make Your Code Available
+
+First, ensure your code is available on GitHub (you should already have this from previous workshops):
+
+```bash
+# Check your git status
+git status
+
+# If you have uncommitted changes, commit them
+git add .
+git commit -m "feat: complete pyproject.toml configuration with metadata and tools"
+
+# Push to your repository (if you haven't already)
+git push origin main
+```
+
+### 5.3 Create a New Test Project
+
+Let's create a simple test project to demonstrate importing your packaged code:
+
+```bash
+# Move to a different directory (outside your current project)
+cd ..
+
+# Create a new test project directory
+mkdir test-import-project
+cd test-import-project
+```
+
+Now create a `pyproject.toml` file for your test project. **Copy and paste** this content into a new `pyproject.toml` file:
+
+```toml
+[project]
+name = "test-import-project"
+version = "0.1.0"
+description = "Testing import of our packaged GP appointments code"
+dependencies = [
+    "pandas>=2.0.0",
+    # We'll add our package dependency here
+]
+```
+
+### 5.4 Add Your Package as a Dependency
+
+Now let's add your properly packaged code as a git dependency. **Update your `pyproject.toml` file** with your repository details:
+
+!!! tip "Update with Your Repository"
+    Replace `YOUR-USERNAME` with your actual GitHub username in the configuration below!
+
+```toml
+[project]
+name = "test-import-project"
+version = "0.1.0"
+description = "Testing import of our packaged GP appointments code"
+dependencies = [
+    "pandas>=2.0.0",
+    "package-your-code-workshop@git+https://github.com/YOUR-USERNAME/package-your-code-workshop.git",
+]
+```
+
+### 5.5 Install and Test Your Package
+
+Now let's install your package and test that we can import it:
+
+=== "With UV"
+
+    ```bash
+    # Create virtual environment and install dependencies
+    uv venv
+    source .venv/bin/activate
+    uv sync
+    
+    # Test importing your package
+    uv run python -c "import practice_level_gp_appointments; print('Success! Imported your package')"
+    
+    # Test accessing your package's functions
+    uv run python -c "
+    from practice_level_gp_appointments.analytics import SummarisationStage
+    print('Successfully imported SummarisationStage class!')
+    print(SummarisationStage.__doc__)
+    "
+    ```
+
+=== "With pip + venv"
+
+    ```bash
+    # Create virtual environment and install dependencies
+    python -m venv .venv
+    source .venv/bin/activate
+    pip install -e .
+    
+    # Test importing your package
+    python -c "import practice_level_gp_appointments; print('Success! Imported your package')"
+    
+    # Test accessing your package's functions
+    python -c "
+    from practice_level_gp_appointments.analytics import SummarisationStage
+    print('Successfully imported SummarisationStage class!')
+    print(SummarisationStage.__doc__)
+    "
+    ```
+
+!!! success "Import Test Complete"
+    If the commands above run without errors, your package is successfully configured and can be imported into other projects!
+
+### 5.6 Advanced: Using Specific Versions
+
+You can also specify particular versions, branches, or commits:
+
+```toml
+# Specific branch
+dependencies = [
+    "package-your-code-workshop@git+https://github.com/YOUR-USERNAME/package-your-code-workshop.git@main",
+]
+
+# Specific tag/version
+dependencies = [
+    "package-your-code-workshop@git+https://github.com/YOUR-USERNAME/package-your-code-workshop.git@v1.0.0",
+]
+
+# Specific commit
+dependencies = [
+    "package-your-code-workshop@git+https://github.com/YOUR-USERNAME/package-your-code-workshop.git@abc1234",
+]
+```
+
+### 5.7 Real-World Example: Team Collaboration
+
+This is exactly how teams share code within organizations:
+
+!!! example "NHS Data Science Team Workflow"
+    
+    **Team Member A** creates a useful data processing package:
+    ```toml
+    # In their pyproject.toml
+    [project]
+    name = "nhs-data-utilities"
+    dependencies = ["pandas", "numpy"]
+    ```
+    
+    **Team Member B** uses it in their analysis project:
+    ```toml
+    # In their analysis project
+    [project]
+    name = "mortality-trends-analysis"
+    dependencies = [
+        "pandas>=2.0.0",
+        "matplotlib>=3.7.0",
+        "nhs-data-utilities@git+https://github.com/nhsengland/nhs-data-utilities.git",
+    ]
+    ```
+    
+    **Benefits:**
+    - ✅ **Reusable code** - No copy-pasting between projects
+    - ✅ **Version control** - Track which version of utilities you're using
+    - ✅ **Easy updates** - Update the git reference to get new features
+    - ✅ **Team standards** - Everyone uses the same tested, documented code
+
+### 5.8 Best Practices for Git Dependencies
+
+!!! tip "Production Best Practices"
+
+    **DO:**
+
+    - ✅ Use specific tags/versions in production: `@v1.2.0`
+    - ✅ Document which projects depend on your package
+    - ✅ Use semantic versioning for your releases
+    - ✅ Test your package in isolation before tagging releases
+    
+    **DON'T:**
+
+    - ❌ Point to `@main` in production (versions can change unexpectedly)
+    - ❌ Make breaking changes without version bumps
+    - ❌ Forget to update documentation when changing interfaces
+
+### 5.9 Integration with PyPI (Optional)
+
+For public packages, you can also publish to PyPI:
+
+```bash
+# Build your package
+python -m build
+
+# Upload to PyPI (requires account and API token)
+python -m twine upload dist/*
+```
+
+Then others can install simply with:
+```bash
+pip install package-your-code-workshop
+```
+
+!!! warning "PyPI Publication"
+    Only publish to PyPI if your package is intended for public use. For internal NHS/organizational use, git dependencies are often more appropriate.
+
 ## Checkpoint
 
 Before moving to the next workshop, verify you can:
@@ -440,6 +653,7 @@ Before moving to the next workshop, verify you can:
 - [ ] Configure dynamic version management from `__init__.py`
 - [ ] Set up and run code quality tools like Ruff
 - [ ] Build your package successfully with proper metadata
+- [ ] Use your packaged code as a dependency in other projects
 
 ## Next Steps
 
