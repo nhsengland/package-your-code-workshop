@@ -33,6 +33,10 @@ Welcome to the **Package Your Code** workshop! This workshop is designed to teac
 
 ## Bonus Content
 
+!!! warning "Work in Progress"
+
+    The bonus workshop are still a work in progress and have not been completed in time for the live delivery of the workshop.
+
 Explore these additional topics at your own pace:
 
 * **[Cookiecutter Templates](workshops/cookiecutter_templates.md)** - Quickly scaffold new projects
