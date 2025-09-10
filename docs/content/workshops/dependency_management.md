@@ -184,7 +184,7 @@ source .venv/bin/activate
 pip install -e .
 
 # Test that our package is accessible
-python -c "import practice_level_gp_appointments; print('Success!')"
+python -c "import practice_level_gp_appointments; print('Success')"
 
 # Now install development tools too
 pip install -e .[dev]

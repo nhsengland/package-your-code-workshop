@@ -25,10 +25,11 @@
       }
     }
   },
-  // "postCreateCommand": "pip install -r requirements.txt && pip install -e .",
-  "postCreateCommand": "pip install --upgrade pip && pip install -r requirements.txt",
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y unixodbc unixodbc-dev && pip install --upgrade pip && pip install -r requirements.txt",
   "forwardPorts": [8000],
   "features": {
-    "ghcr.io/devcontainers/features/github-cli:1": {}
-  }
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "remoteUser": "vscode"
 }
