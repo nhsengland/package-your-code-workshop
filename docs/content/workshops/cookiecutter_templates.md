@@ -1,6 +1,7 @@
 # Cookiecutter Data Science: Professional Project Templates
 
-*Bonus Workshop - Self-Paced*
+!!! tip "Bonus Workshop - Self-Paced"
+    This is an optional, self-paced workshop. You can complete it at your own speed and refer back to it as needed.
 
 Learn how to create standardised, professional data science projects using Cookiecutter Data Science (CCDS), a proven template used by data scientists worldwide.
 
@@ -24,15 +25,11 @@ Learn how to create standardised, professional data science projects using Cooki
 
 ### Why Use CCDS?
 
-**🏗️ Consistent Structure**: Every project follows the same layout, making it easy for team members to navigate and contribute.
-
-**📊 Data Science Focused**: Specifically designed for data science workflows with dedicated folders for data, notebooks, models, and reports.
-
-**🔄 Reproducible**: Includes configuration for environment management, dependency tracking, and documentation.
-
-**🚀 Battle Tested**: Used by academic institutions, startups, and Fortune 500 companies for production data science work.
-
-**🤝 Team Collaboration**: New team members can quickly understand and contribute to any CCDS project.
+* **Consistent Structure**: Every project follows the same layout, making it easy for team members to navigate and contribute.
+* **Data Science Focused**: Specifically designed for data science workflows with dedicated folders for data, notebooks, models, and reports.
+* **Reproducible**: Includes configuration for environment management, dependency tracking, and documentation.
+* **Battle Tested**: Used by multiple users for their production data science work, with continual improvements based on real-world feedback. 
+* **Team Collaboration**: New team members can quickly understand and contribute to any CCDS project.
 
 ## Task 1: Understanding Project Structure Problems
 
