@@ -1,4 +1,7 @@
-# CI/CD with GitHu## What is CI/CD?
+# CI/CD with GitHub Actions: Automate Testing and Documentation Deployment
+
+!!! tip "Bonus Workshop - Self-Paced"
+    This is an optional, self-paced workshop. You can complete it at your own speed and refer back to it as needed.
 
 !!! info "CI/CD Definitions"
     **Continuous Integration (CI)** automatically tests your code every time you make changes, catching problems early.

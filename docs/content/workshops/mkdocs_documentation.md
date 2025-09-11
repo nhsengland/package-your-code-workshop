@@ -1,4 +1,4 @@
-# Documentation with MkDocs: From Setup to GitHub Pages
+# Documentation with MkDocs: Professional Docs for Your Python Projects
 
 Learn how to create professional documentation for your Python projects using MkDocs Material, generate automatic API documentation, and deploy to GitHub Pages.
 

@@ -1,4 +1,4 @@
-# Dependency Management: From pip to UV
+# Dependency Management: From pip to the pyroject.toml to uv
 
 Learn how to modernize your Python dependency management by building on traditional `pip + venv` workflows and transitioning to modern tools like `uv` for better organization and performance.
 
