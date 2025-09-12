@@ -49,6 +49,12 @@ plugins:
 nav:
   - Home: index.md
   - Getting Started: getting_started.md
+  - Workshop Presentation:
+    - workshop_presentation/index.md
+    - Open Up The Repository: workshop_presentation/open_up_the_repository.md
+    - Who am I: workshop_presentation/who_am_i.md
+    - Workshop Context - Why is any of this important?: workshop_presentation/workshop_context.md
+    - Opinions and Disclaimers: workshop_presentation/opinions_and_disclaimers.md
   - Workshops:
     - workshops/index.md
     - Dependency Management: workshops/dependency_management.md
