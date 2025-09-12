@@ -522,7 +522,7 @@ Now let's install your package and test that we can import it:
     uv sync
     
     # Test importing your package
-    uv run python -c "import practice_level_gp_appointments; print('Success! Imported your package')"
+    uv run python -c "import practice_level_gp_appointments; print('Success. Imported your package')"
     
     # Test accessing your package's functions
     uv run python -c "
@@ -541,7 +541,7 @@ Now let's install your package and test that we can import it:
     pip install -e .
     
     # Test importing your package
-    python -c "import practice_level_gp_appointments; print('Success! Imported your package')"
+    python -c "import practice_level_gp_appointments; print('Success. Imported your package')"
     
     # Test accessing your package's functions
     python -c "
