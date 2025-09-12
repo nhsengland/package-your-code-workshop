@@ -193,6 +193,21 @@ pip install -e .[dev]
 pip install -e .[dev,docs]
 ```
 
+??? error "Previously encountered issues with `libodbc.so.2` and `pyodbc`"
+
+    If you encounter an error during this stage related to `libodbc.so.2`, `pyodbc`, or similar it might be some missing system dependencies. These should be installed automatically when you create your container but if you are still getting the error try the following commands:
+
+    ```bash
+    sudo apt-get update
+    sudo apt-get install -y unixodbc unixodbc-dev
+
+    pip install --force-reinstall pyodbc
+
+    python -c "import practice_level_gp_appointments; print('Success')"
+    ```
+
+    This should resolve the issue.
+
 ## Task 3: Introducing UV
 
 Now let's introduce [UV](https://docs.astral.sh/uv/), a modern Python package manager built in [Rust](https://www.rust-lang.org/) that builds on the foundations we've established.
