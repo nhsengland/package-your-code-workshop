@@ -193,7 +193,7 @@ pip install -e .[dev]
 pip install -e .[dev,docs]
 ```
 
-??? error "Previously encountered issues with `libodbc.so.2` and `pyodbc`"
+??? bug "Previously encountered issues with `libodbc.so.2` and `pyodbc`"
 
     If you encounter an error during this stage related to `libodbc.so.2`, `pyodbc`, or similar it might be some missing system dependencies. These should be installed automatically when you create your container but if you are still getting the error try the following commands:
 
